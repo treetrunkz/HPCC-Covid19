@@ -43,7 +43,7 @@ Looking at the diagram above, we see that Social Behavior (e.g. Social Distance)
 We see that the primary effect of Social Behavior is on the number of Active Infections.  This is also an unobserved variable but it, in turn, effects Reported Cases, an observable variable.  When we look at the myriad influences that drive Reported Cases, it seems unlikely that we can unconfound it enough to use it as a proxy for Social Distance.  Let's look at each of these influences, both direct and indirect, and see if it's possible.  I reorder them to ease the narrative:
 - Original Exposure Count -- If we use the differential version (dCases/dT), then this 
 - Time since first exposure
-- Case Reporing Policy
+- Case Reporting Policy
 - Test Policy and Coverage
 - Weather / Climate
 - Population Density
