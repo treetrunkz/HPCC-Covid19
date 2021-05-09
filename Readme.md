@@ -139,7 +139,7 @@ _People Fully Vaccinated_ shows the number of people who have received all of th
 
 _Population Vaccinated Pct_ is the percent of the population that has recieved all of the required doses of any vaccine (not available for all locations).
 
-_Vaccines Administered Pct_ is he percent of the distributed vaccines that have been administered. This data is currently only available for US states. 
+_Vaccines Administered Pct_ is the percent of the distributed vaccines that have been administered. This data is currently only available for US states. 
 
 In addition to the cumulative vaccination data above, the system also produces daily and weekly vaccination data.
 
