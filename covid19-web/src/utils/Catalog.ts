@@ -22,12 +22,15 @@ export default class Catalog {
     maps.set('THE WORLD-INDIA', { file: 'india-states.geojson', secondaryFile: '', colorKeyField: 'NAME_1', selectKeyField: 'NAME_1', lat: 20.5, long: 79, zoom: 5.0, });
     maps.set('THE WORLD-BRAZIL', { file: 'brazil-states.geojson', secondaryFile: '', colorKeyField: 'NAME_1', selectKeyField: 'NAME_1', lat: -14.2, long: -51.9, zoom: 4.5, });
     maps.set('THE WORLD-UNITED KINGDOM', { file: 'uk-countries.geojson', secondaryFile: '', colorKeyField: 'ctry19nm', selectKeyField: 'ctry19nm', lat: 55.37, long: -2.07, zoom: 6.0, });
-//begin new
+    
+    //begin new
     maps.set('THE WORLD-UNITED KINGDOM-ENGLAND', {file: 'england-states.geojson', secondaryfile: '', colorKeyField: 'id', selectKeyField: 'EER13NM', lat: -1.13, long: 52.5, zoom: 5.0, });
     maps.set('THE WORLD-UNITED KINGDOM-NORTHERN IRELAND', {file: 'northernireland-states.geojson', secondaryFile: '', colorKeyField: 'PC_ID', selectKeyField: 'PC_NAME', lat: -6.0, long: 54.0, zoom: 6.0, });
     maps.set('THE WORLD-UNITED KINGDOm-SCOTLAND', { file: 'scotland-states.geojson', secondaryFIle: '', colorKeyField: 'id', selectKeyFIeld: 'PCON13NM', lat: -4.0, long: 56.0, zoom: 5.5, });
     maps.set('THE WORLD-UNITED KINGDOM-WALES', { file: 'wales-states.geojson', secondaryFile: '', colorKeyField: 'PCON13CD', selectKeyField: 'PCON13NM', lat: -3.6, long: 52.3, zoom: 6.0, });
-//end new
+    maps.set('THE WORLD-ISRAEL', { file: 'israel-districts.geojson', secondaryFile: '', colorKeyField: 'fips', selectKeyField: 'admin_name', lat: 31.0, long: 34.0, zoom: 6.0, });   
+   
+    //end new
     maps.set('THE WORLD-US-WASHINGTON', { file: 'us-counties-washington.geojson', secondaryFile: '', colorKeyField: 'JURISDIC_5', selectKeyField: 'JURISDIC_2', lat: 47.0, long: -120.0, zoom: 7.5, });
     maps.set('THE WORLD-US-OREGON', { file: 'us-counties-oregon.geojson', secondaryFile: '', colorKeyField: 'instcode', selectKeyField: 'altname', lat: 43.7, long: -120.0, zoom: 7.0, });
     maps.set('THE WORLD-US-ALABAMA', { file: 'us-counties-alabama.geojson', secondaryFile: '', colorKeyField: 'geoid', selectKeyField: 'name', lat: 33.0, long: -86.8, zoom: 7.5, });

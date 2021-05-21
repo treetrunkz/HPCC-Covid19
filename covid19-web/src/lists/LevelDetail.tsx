@@ -12,6 +12,7 @@ import {
     StepForwardFilled
 } from '@ant-design/icons';
 import MetricsTerms from "./MetricsTerms";
+import Travel from "./Travel";
 import Catalog from "../utils/Catalog";
 import useStateRef from "../utils/UseStateRef";
 import OlRangeMap from "../components/OlRangeMap";
@@ -127,7 +128,7 @@ const LevelDetail = () => {
                 mapSummary.set(item.period, item.commentary);
             });
 
-            //console.log("Map - " + getLocationUUID());
+            console.log("Map - " + getLocationUUID());
             setMaxData({
                 "casesMax": casesMax,
                 "deathsMax": deathsMax,
@@ -213,7 +214,7 @@ const LevelDetail = () => {
 
 
     const pushLocation = (location: any) => {
-
+        console.log("pushing a location" + location);
         locationStack.current.push(location);
         setLocation(location);
 
@@ -630,7 +631,9 @@ const LevelDetail = () => {
     return (
         <Layout>
             <div style={{textAlign: "center"}}>
-
+                <Popover key={'popover_travel'} title={"Travel"} content={<Travel/>}
+                         trigger={"click"}><Button href={"#Travel"} type={"link"} className={"anchor-btn"}>Travel
+                         </Button></Popover>
                 <Button href={"#commentary"} type={"link"} className={"anchor-btn"}>Commentary/Top</Button>
                 <Button href={"#map"} type={"link"} className={"anchor-btn"}>Map</Button>
                 <Button href={"#summary_stats"} type={"link"} className={"anchor-btn"}>Stats</Button>
