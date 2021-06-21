@@ -28,7 +28,7 @@ export default class Catalog {
     maps.set('THE WORLD-UNITED KINGDOM-NORTHERN IRELAND', {file: 'northernireland-states.geojson', secondaryFile: '', colorKeyField: 'PC_ID', selectKeyField: 'PC_NAME', lat: -6.0, long: 54.0, zoom: 6.0, });
     maps.set('THE WORLD-UNITED KINGDOm-SCOTLAND', { file: 'scotland-states.geojson', secondaryFIle: '', colorKeyField: 'id', selectKeyFIeld: 'PCON13NM', lat: -4.0, long: 56.0, zoom: 5.5, });
     maps.set('THE WORLD-UNITED KINGDOM-WALES', { file: 'wales-states.geojson', secondaryFile: '', colorKeyField: 'PCON13CD', selectKeyField: 'PCON13NM', lat: -3.6, long: 52.3, zoom: 6.0, });
-    maps.set('THE WORLD-ISRAEL', { file: 'israel-districts.geojson', secondaryFile: '', colorKeyField: 'fips', selectKeyField: 'admin_name', lat: 31.0, long: 34.0, zoom: 6.0, });   
+    maps.set('THE WORLD-ISRAEL', { file: 'israel-districts.geojson', secondaryFile: '', colorKeyField: 'city', selectKeyField: 'city', lat: 31.0, long: 34.0, zoom: 4.0, });   
    
     //end new
     maps.set('THE WORLD-US-WASHINGTON', { file: 'us-counties-washington.geojson', secondaryFile: '', colorKeyField: 'JURISDIC_5', selectKeyField: 'JURISDIC_2', lat: 47.0, long: -120.0, zoom: 7.5, });
