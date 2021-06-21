@@ -39,12 +39,4 @@ AndhraPradeshDS := DATASET(1, TRANSFORM(popclean.layout,
                                        SELF.total_persons := 49386799 ,
                                        SELF.Total_Males := 0,
                                        SELF.Total_Females := 0,
-                                       SELF.Rural_Persons := 0,
-                                       SELF.Rural_Males := 0,
-                                       SELF.Rural_Females := 0,
-                                       SELF.Urban_Persons := 0,
-                                       SELF.Urban_Males := 0,
-                                       SELF.Urban_Females := 0));     
-rst :=   cleanedPop(area_name <> '' AND area_name <> 'ANDHRA PRADESH') + TELANGANADS +  AndhraPradeshDS ;         
-
-OUTPUT(rst ,,popclean.filePath, THOR, COMPRESSED, OVERWRITE);
+                                     hpccsystems.covid19.file.raw.

@@ -6,7 +6,7 @@ IMPORT Std;
 cleanedPop := PROJECT
     (
        popRaw.ds, 
-       TRANSFORM
+       TRANSFORM  
        (RECORDOF(LEFT),
             location0 := REGEXREPLACE('[^A-Za-z]', LEFT.location, '');
             SELF.location := STD.Str.ToUpperCase(TRIM(location0, LEFT, RIGHT));
