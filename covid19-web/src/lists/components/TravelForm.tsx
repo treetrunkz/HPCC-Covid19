@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-
+import TravelMap  from './TravelMap';
 import {  Row, Col, Form, Input, Button, AutoComplete, Checkbox  } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 const layout = {
@@ -141,6 +141,9 @@ const TravelForm = () => {
               setExpand(!expand);
             }}
           >
+            <div>
+              <TravelMap></TravelMap>
+              </div>
             {expand ? <UpOutlined /> : <DownOutlined />} Collapse
           </a>
     </Form>

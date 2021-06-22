@@ -159,8 +159,8 @@ export default function OlRangeMap(props: Props) {
         let row = props.data.get(periodRef.current).map.get(name.toUpperCase());
 
         if (row) {
-            console.log('Color location: ' + name.toUpperCase() +  ', CR = ' + row.contagion_risk + ', Period = ' + periodRef.current);
-            console.log("color change: " + heatMapTypeRef.current);
+            // console.log('Color location: ' + name.toUpperCase() +  ', CR = ' + row.contagion_risk + ', Period = ' + periodRef.current);
+            // console.log("color change: " + heatMapTypeRef.current);
 
             let d = 0;
             switch (heatMapTypeRef.current) {

@@ -1,5 +1,6 @@
-import * as React from "react";
-
+// import * as React, {useRef} from "react";
+import React, {useRef} from "react";
+import { QueryData } from "../../../components/QueryData";
 interface IFormProps {
   /* The http path that the form will be posted to */
   action: string;
@@ -33,16 +34,21 @@ interface IFormProps {
     /* A prop which allows content to be injected */
     render: () => React.ReactNode;
   }
+
 export class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
+    const query = useRef(new QueryData('hpccsystems_covid19_query_travel_form'))
+    console.log(query.current.getData('USA') + "Test");
 
     const errors: IErrors = {};
     const values: IValues = {};
+
     this.state = {
       errors,
       values
     };
+
   }
 
   /**
@@ -67,7 +73,6 @@ export class Form extends React.Component<IFormProps, IFormState> {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-
     if (this.validateForm()) {
       const submitSuccess: boolean = await this.submitForm();
       this.setState({ submitSuccess });
@@ -93,10 +98,13 @@ export class Form extends React.Component<IFormProps, IFormState> {
   }
 
   public render() {
+
     const { submitSuccess, errors } = this.state;
     return (
       <form onSubmit={this.handleSubmit} noValidate={true}>
         <div className="container">
+          <div>
+            </div>
            {this.props.render()}
           <div className="form-group">
             <button
@@ -106,7 +114,9 @@ export class Form extends React.Component<IFormProps, IFormState> {
             >
               Submit
             </button>
+
           </div>
+          
           {submitSuccess && (
             <div className="alert alert-info" role="alert">
               The form was successfully submitted!
@@ -123,6 +133,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
               <div className="alert alert-danger" role="alert">
                 Sorry, the form is invalid. Please review, adjust and try again
               </div>
+              
             )}
         </div>
       </form>
