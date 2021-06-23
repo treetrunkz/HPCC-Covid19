@@ -20,6 +20,7 @@ const layout = {
     span: 32,
   },
 };
+
 const tailLayout = {
   wrapperCol: {
     layout: "Inline",
@@ -27,7 +28,6 @@ const tailLayout = {
     span: 32 ,
   },
 };
-
 
 const searchQueries = (values: any, queryDestination: any) => {
 
@@ -41,11 +41,6 @@ const searchQueries = (values: any, queryDestination: any) => {
   const state2 = values["field-1"];
   const city2 = values["field-4"];
   const country2 = values["field-7"];
-
-  //Destination #3
-  // const state3 = values["field-2"];
-  // const city3 = values["field-5"];
-  // const country3 = values["field-8"];
 
   //#1
   const source = {
@@ -61,18 +56,12 @@ const searchQueries = (values: any, queryDestination: any) => {
     country: country2
   }
 
-  //#3
-  // const optional = {
-  //   city: city3,
-  //   state: state3,
-  //   country: country3
-  // }
-
   TravelMapper(source, queryDestination);
- TravelMapper(destination, queryDestination);
-  console.log(TravelMapper(source, queryDestination));
+  TravelMapper(destination, queryDestination);
+
   console.log("YOUR STARTING DESTINATION: " + state1 + ", " +  city1 + ", " + country1);
   console.log("ENDING IN: " + state2 + ", " + city2 + ", " + country2);
+
 }
 
 
@@ -85,18 +74,11 @@ const TravelMapper = (travel: Travel, queryDestination: any) => {
   filters.set('recs.Row.country', travel.country); //R country input of state
 
   queryDestination.current.initData(filters).then(() => {
-
     let city = queryDestination.current.getData('');
     let mapData = new Map();
     city.forEach((item: any) => {
       console.log(item.state);
       mapData.set(item.city, item.state);
-        let cityData = mapData.get(item.city);
-        let stateData = mapData.get(item.state);
-        let countryData = mapData.get(item.country);
-        // cityData = {"city": item.city_string};
-        // stateData = {"state": item.state_string};
-        // countryData = {"country": item.country_string};
     })
     return mapData;
     });
@@ -109,12 +91,13 @@ const TravelForm = () => {
   const [expand, setExpand] = useState(false);
 
   const onFinish = (values: any) => {
-    //This is where I will send TravelForm the data
     searchQueries(values, queryDestination)
   }
+
   const onFail = (errorInfo: any) => {
     console.log("failed:", errorInfo);
   };
+
   const getFields = () => {
     const count = expand ? 3 : 2;
     const children = [];
