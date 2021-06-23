@@ -38,8 +38,7 @@ interface IFormProps {
 export class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
-    const query = useRef(new QueryData('hpccsystems_covid19_query_travel_form'))
-    console.log(query.current.getData('USA') + "Test");
+
 
     const errors: IErrors = {};
     const values: IValues = {};

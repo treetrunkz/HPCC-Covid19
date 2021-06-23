@@ -8,11 +8,6 @@ const TravelMap = () => {
     const [destination, setDestination] = useState<string>(''); 
     const mapArray = useRef<any>([]);
 
-    // useEffect(() => {
-    //     setSource("USA");
-    //     setDestination("USA");
-    // })
-
     let filters = new Map();
 
     filters.set('recs.Row.city', "SEATTLE");//R user input of city
@@ -20,6 +15,7 @@ const TravelMap = () => {
     filters.set('recs.Row.country', "USA"); //R country input of state
 
     queryDestination.current.initData(filters).then(() => {
+
         let currentcity = '';
         let currentstate = '';
         let currentcountry = '';

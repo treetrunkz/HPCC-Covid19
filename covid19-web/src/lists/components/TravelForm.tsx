@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import TravelMap  from './TravelMap';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState, useRef } from 'react';
+import ReactDOM from 'react';
+import { QueryData } from "../../components/QueryData";
 import {  Row, Col, Form, Input, Button, AutoComplete, Checkbox  } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+
+
+interface Travel {
+  city: string;
+  state: string;
+  country: string;
+}
+
 const layout = {
   labelCol: {
     span: 8,
@@ -19,44 +28,89 @@ const tailLayout = {
   },
 };
 
-const options = [
-  {
-    value: 'Seattle',
-  },
-  {
-    value: 'Washington',
-  },
-  {
-    value: 'Atlanta',
-  },
-  {
-    value: 'Georgia',
-  },
-];
 
-const searchQueries = (values: any) => {
+const searchQueries = (values: any, queryDestination: any) => {
+
+  
+  //Destination #1
   const state1 = values["field-0"];
   const city1 = values["field-3"];
   const country1 = values["field-6"];
 
+  //Destination #2
   const state2 = values["field-1"];
   const city2 = values["field-4"];
   const country2 = values["field-7"];
 
-  const state3 = values["field-2"];
-  const city3 = values["field-5"];
-  const country3 = values["field-8"];
+  //Destination #3
+  // const state3 = values["field-2"];
+  // const city3 = values["field-5"];
+  // const country3 = values["field-8"];
 
-  console.log(values);
+  //#1
+  const source = {
+    city: city1,
+    state: state1,
+    country: country1
+  }
+
+  //#2
+  const destination = {
+    city: city2,
+    state: state2,
+    country: country2
+  }
+
+  //#3
+  // const optional = {
+  //   city: city3,
+  //   state: state3,
+  //   country: country3
+  // }
+
+  console.log(TravelMapper(source, queryDestination));
+  console.log(TravelMapper(destination, queryDestination));
 
   console.log("YOUR STARTING DESTINATION: " + state1 + ", " +  city1 + ", " + country1);
   console.log("ENDING IN: " + state2 + ", " + city2 + ", " + country2);
 }
+
+
+const TravelMapper = (travel: Travel, queryDestination: any) => {
+  console.log(travel.city);
+  console.log(travel.country);
+  let filters = new Map();
+
+  filters.set('recs.Row.city', travel.city);//R user input of city
+  filters.set('recs.Row.state', travel.state); //R user input of state
+  filters.set('recs.Row.country', travel.country); //R country input of state
+
+
+  queryDestination.current.initData(filters).then(() => {
+
+    let city = queryDestination.current.getData('');
+    let mapData = new Map();
+    city.forEach((item: any) => {
+        let cityData = mapData.get(item.city);
+        let stateData = mapData.get(item.state);
+        let countryData = mapData.get(item.country);
+        let travData = cityData + stateData + countryData;
+        return travData;
+    })
+
+    });
+}
+
 const TravelForm = () => {
+
+  const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
+  console.log(queryDestination);
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    searchQueries(values)
+    //This is where I will send TravelForm the data
+    searchQueries(values, queryDestination)
+
   }
   const onFail = (errorInfo: any) => {
     console.log("failed:", errorInfo);
@@ -71,7 +125,7 @@ const TravelForm = () => {
           <label>Destination</label>
           
         <Row key={i}>
-<Form.Item
+      <Form.Item
             name={`field-${i}`}
             label={`State`}
         rules={[
@@ -142,13 +196,14 @@ const TravelForm = () => {
             }}
           >
             <div>
-              <TravelMap></TravelMap>
+             
               </div>
             {expand ? <UpOutlined /> : <DownOutlined />} Collapse
           </a>
     </Form>
 )
 }
+
 export default TravelForm;
 
 
