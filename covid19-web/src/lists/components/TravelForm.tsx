@@ -68,49 +68,49 @@ const searchQueries = (values: any, queryDestination: any) => {
   //   country: country3
   // }
 
+  TravelMapper(source, queryDestination);
+ TravelMapper(destination, queryDestination);
   console.log(TravelMapper(source, queryDestination));
-  console.log(TravelMapper(destination, queryDestination));
-
   console.log("YOUR STARTING DESTINATION: " + state1 + ", " +  city1 + ", " + country1);
   console.log("ENDING IN: " + state2 + ", " + city2 + ", " + country2);
 }
 
 
 const TravelMapper = (travel: Travel, queryDestination: any) => {
-  console.log(travel.city);
-  console.log(travel.country);
+
   let filters = new Map();
 
   filters.set('recs.Row.city', travel.city);//R user input of city
   filters.set('recs.Row.state', travel.state); //R user input of state
   filters.set('recs.Row.country', travel.country); //R country input of state
 
-
   queryDestination.current.initData(filters).then(() => {
 
     let city = queryDestination.current.getData('');
     let mapData = new Map();
     city.forEach((item: any) => {
+      console.log(item.state);
+      mapData.set(item.city, item.state);
         let cityData = mapData.get(item.city);
         let stateData = mapData.get(item.state);
         let countryData = mapData.get(item.country);
-        let travData = cityData + stateData + countryData;
-        return travData;
+        // cityData = {"city": item.city_string};
+        // stateData = {"state": item.state_string};
+        // countryData = {"country": item.country_string};
     })
-
+    return mapData;
     });
 }
 
 const TravelForm = () => {
 
   const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
-  console.log(queryDestination);
+
   const [expand, setExpand] = useState(false);
-  const [form] = Form.useForm();
+
   const onFinish = (values: any) => {
     //This is where I will send TravelForm the data
     searchQueries(values, queryDestination)
-
   }
   const onFail = (errorInfo: any) => {
     console.log("failed:", errorInfo);
