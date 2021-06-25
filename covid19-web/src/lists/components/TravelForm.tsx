@@ -1,15 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef } from 'react';
 import ReactDOM from 'react';
+import { MutableRefObject } from 'react';
 import { QueryData } from "../../components/QueryData";
 import {  Row, Col, Form, Input, Button, AutoComplete, Checkbox  } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+
+import internal from 'stream';
 
 
 interface Travel {
   city: string;
   state: string;
   country: string;
+  itemCount: number;
 }
 
 const layout = {
@@ -29,6 +33,7 @@ const tailLayout = {
   },
 };
 
+
 const searchQueries = (values: any, queryDestination: any) => {
 
   
@@ -41,19 +46,22 @@ const searchQueries = (values: any, queryDestination: any) => {
   const state2 = values["field-1"];
   const city2 = values["field-4"];
   const country2 = values["field-7"];
+  const itemCount = 1;
 
   //#1
   const source = {
     city: city1,
     state: state1,
-    country: country1
+    country: country1,
+    itemCount: itemCount
   }
 
   //#2
   const destination = {
     city: city2,
     state: state2,
-    country: country2
+    country: country2,
+    itemCount: itemCount
   }
 
   TravelMapper(source, queryDestination);
@@ -69,15 +77,16 @@ const TravelMapper = (travel: Travel, queryDestination: any) => {
 
   let filters = new Map();
 
-  filters.set('recs.Row.city', travel.city);//R user input of city
-  filters.set('recs.Row.state', travel.state); //R user input of state
-  filters.set('recs.Row.country', travel.country); //R country input of state
-
+  filters.set('recs.Row.0.city', travel.city);//R user input of city
+  filters.set('recs.Row.0.state', travel.state); //R user input of state
+  filters.set('recs.Row.0.country', travel.country); //R country input of state
+  filters.set('recs.itemcount%21', "1"); //arjuna line
+  
   queryDestination.current.initData(filters).then(() => {
     let city = queryDestination.current.getData('');
     let mapData = new Map();
     city.forEach((item: any) => {
-      console.log(item.state);
+      console.log(item.compareRecs);
       mapData.set(item.city, item.state);
     })
     return mapData;
@@ -87,7 +96,13 @@ const TravelMapper = (travel: Travel, queryDestination: any) => {
 const TravelForm = () => {
 
   const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
-
+  let rr = queryDestination.current.getJSONData;
+  console.log(rr + "answer");
+  const returnData = new Map();
+  queryDestination.current.getJSONData((item: any) => {
+      returnData.set(item.state, item.city);
+  })
+  console.log(returnData);
   const [expand, setExpand] = useState(false);
 
   const onFinish = (values: any) => {
@@ -188,9 +203,3 @@ const TravelForm = () => {
 }
 
 export default TravelForm;
-
-
-
-
-
-

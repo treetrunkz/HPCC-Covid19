@@ -3,11 +3,14 @@ export  class QueryData {
 
     private readonly queryName: string;
     private data: any;
+    public returnData: any;
 
     constructor(queryName: string) {
         this.queryName = queryName;
         this.data = {};
+        this.returnData = [];
     }
+
 
     async initData(filters: Map<string, string>|undefined) {
 
@@ -23,7 +26,6 @@ export  class QueryData {
         }
 
         this.data = await this.getAPIData(filterStr);
-
     }
 
     getAPIData(filterStr: string): Promise<any> {
@@ -48,10 +50,30 @@ export  class QueryData {
         } else return [];
     }
 
+    getJSONData(jsonObj:object): any{
+        let nou = new Map();
+        let jsonMap = new Map();
+        if(this.queryName === 'hpccsystems_covid19_query_travel_form'){
+            // console.log(jsonObj);
+            for (const [key, value] of Object.entries(jsonObj)){
+                nou.set(key, value);
+            }
+            JSON.stringify(nou);
+
+            if(nou.has('iata')){
+                jsonMap = nou;
+            }
+
+            return jsonMap;
+        }
+        else { return }
+    }
+
     traverse(jsonObj:object, resultName:string, stack:any[]) {
         if( jsonObj !== null && typeof jsonObj == "object" ) {
+            //create function to return object yay!
+            this.returnData = this.getJSONData(jsonObj);
             Object.entries(jsonObj).forEach(([key, value]) => {
-
                 if (key===resultName) {
                     stack.push(value.Row);
                 } else {
