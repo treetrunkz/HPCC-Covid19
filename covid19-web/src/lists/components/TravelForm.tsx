@@ -1,20 +1,11 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef } from 'react';
 import ReactDOM from 'react';
 import { MutableRefObject } from 'react';
 import { QueryData } from "../../components/QueryData";
 import {  Row, Col, Form, Input, Button, AutoComplete, Checkbox  } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import OlAirportMap from '../../components/OlAirportMap';
 
-import internal from 'stream';
-
-
-interface Travel {
-  city: string;
-  state: string;
-  country: string;
-  itemCount: number;
-}
 
 const layout = {
   labelCol: {
@@ -34,79 +25,35 @@ const tailLayout = {
 };
 
 
-const searchQueries = (values: any, queryDestination: any) => {
-
-  
-  //Destination #1
-  const state1 = values["field-0"];
-  const city1 = values["field-3"];
-  const country1 = values["field-6"];
-
-  //Destination #2
-  const state2 = values["field-1"];
-  const city2 = values["field-4"];
-  const country2 = values["field-7"];
-  const itemCount = 1;
-
-  //#1
-  const source = {
-    city: city1,
-    state: state1,
-    country: country1,
-    itemCount: itemCount
-  }
-
-  //#2
-  const destination = {
-    city: city2,
-    state: state2,
-    country: country2,
-    itemCount: itemCount
-  }
-
-  TravelMapper(source, queryDestination);
-  TravelMapper(destination, queryDestination);
-
-  console.log("YOUR STARTING DESTINATION: " + state1 + ", " +  city1 + ", " + country1);
-  console.log("ENDING IN: " + state2 + ", " + city2 + ", " + country2);
-
-}
-
-
-const TravelMapper = (travel: Travel, queryDestination: any) => {
-
-  let filters = new Map();
-
-  filters.set('recs.Row.0.city', travel.city);//R user input of city
-  filters.set('recs.Row.0.state', travel.state); //R user input of state
-  filters.set('recs.Row.0.country', travel.country); //R country input of state
-  filters.set('recs.itemcount%21', "1"); //arjuna line
-  
-  queryDestination.current.initData(filters).then(() => {
-    let city = queryDestination.current.getData('');
-    let mapData = new Map();
-    city.forEach((item: any) => {
-      console.log(item.compareRecs);
-      mapData.set(item.city, item.state);
-    })
-    return mapData;
-    });
-}
-
-const TravelForm = () => {
+const TravelForm = (values: any) => {
+  const [expand, setExpand] = useState(false);
+  const [data, setData] = useState<any>([]);
 
   const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
-  let rr = queryDestination.current.getJSONData;
-  console.log(rr + "answer");
-  const returnData = new Map();
-  queryDestination.current.getJSONData((item: any) => {
-      returnData.set(item.state, item.city);
+  let filters = new Map();
+  console.log(queryDestination)
+
+  const objectSetter = (values: any) => {
+    
+  for (const [key, value] of Object.entries(values)) {
+    filters.set(`recs.Row.${key}`, `${value}`);
+  }
+  filters.set('recs.itemcount%21', "1");
+  console.log(filters);
+
+  queryDestination.current.initData(filters).then(() => {
+    let data = queryDestination.current.getData('outDataset');
+    data.forEach((item: any) => {
+      setData(item);
+    })
   })
-  console.log(returnData);
-  const [expand, setExpand] = useState(false);
+}
+
+
+
 
   const onFinish = (values: any) => {
-    searchQueries(values, queryDestination)
+    objectSetter(values)
   }
 
   const onFail = (errorInfo: any) => {
@@ -124,7 +71,7 @@ const TravelForm = () => {
           
         <Row key={i}>
       <Form.Item
-            name={`field-${i}`}
+            name={`${i}.state`}
             label={`State`}
         rules={[
           {
@@ -138,7 +85,7 @@ const TravelForm = () => {
       </Form.Item>
      
       <Form.Item
-            name={`field-${i + 3}`}
+            name={`${i}.city`}
             label={`City`}
       rules={[
         {
@@ -151,7 +98,7 @@ const TravelForm = () => {
       </Form.Item>
 
       <Form.Item
-            name={`field-${i + 6}`}
+            name={`${i}.country`}
             label={`Country`}
       rules={[
         {
@@ -170,6 +117,7 @@ const TravelForm = () => {
     return children;
   };
   return (
+    <div>
     <Form
     {...layout}
     name="basic"
@@ -199,6 +147,10 @@ const TravelForm = () => {
             {expand ? <UpOutlined /> : <DownOutlined />} Collapse
           </a>
     </Form>
+          <OlAirportMap
+          data = {data}
+          ></OlAirportMap>
+    </div>
 )
 }
 
