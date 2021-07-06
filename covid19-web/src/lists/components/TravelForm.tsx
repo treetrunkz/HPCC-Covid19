@@ -1,11 +1,10 @@
-import React, { useState, useRef } from 'react';
-import ReactDOM from 'react';
-import { MutableRefObject } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import { QueryData } from "../../components/QueryData";
-import {  Row, Col, Form, Input, Button, AutoComplete, Checkbox  } from "antd";
+import {  Row, Col, Form, Input, Button } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import OlAirportMap from '../../components/OlAirportMap';
-
+import Travel from '../Travel';
 
 const layout = {
   labelCol: {
@@ -24,38 +23,36 @@ const tailLayout = {
   },
 };
 
-
-const TravelForm = (values: any) => {
+const TravelForm: React.FC = () => {
+  
+interface Travel {
+  city: string;
+  state: string;
+  country: string;
+  itemCount: number;
+}
+  const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
+  
   const [expand, setExpand] = useState(false);
   const [data, setData] = useState<any>([]);
 
-  const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
-  let filters = new Map();
-  console.log(queryDestination)
-
-  const objectSetter = (values: any) => {
-    
-  for (const [key, value] of Object.entries(values)) {
-    filters.set(`recs.Row.${key}`, `${value}`);
-  }
-  filters.set('recs.itemcount%21', "1");
-  console.log(filters);
-
-  queryDestination.current.initData(filters).then(() => {
-    let data = queryDestination.current.getData('outDataset');
-    data.forEach((item: any) => {
-      setData(item);
-    })
-  })
-}
-
-
-
-
   const onFinish = (values: any) => {
-    objectSetter(values)
-  }
 
+    console.log(values);
+    let filters = new Map();
+
+    for (const [key, value] of Object.entries(values)) {
+    filters.set(`recs.Row.${key}`, value);//R user input of city
+     };
+    filters.set('recs.itemcount%21', "1");
+    console.log(filters);
+
+    queryDestination.current.initData(filters).then(() => {
+      let data2 = queryDestination.current.getData('outDataset');
+      setData(data2);
+    })
+  }
+    
   const onFail = (errorInfo: any) => {
     console.log("failed:", errorInfo);
   };
@@ -116,6 +113,8 @@ const TravelForm = (values: any) => {
     }
     return children;
   };
+
+
   return (
     <div>
     <Form
@@ -147,9 +146,9 @@ const TravelForm = (values: any) => {
             {expand ? <UpOutlined /> : <DownOutlined />} Collapse
           </a>
     </Form>
-          <OlAirportMap
-          data = {data}
-          ></OlAirportMap>
+    <OlAirportMap 
+        data = {data}
+    />
     </div>
 )
 }
