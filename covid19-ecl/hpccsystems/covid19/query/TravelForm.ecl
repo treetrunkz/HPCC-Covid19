@@ -9,10 +9,14 @@ QueryRec := RECORD
 STRING city;  
 STRING state;  
 STRING country; 
+INTEGER itemCount;
 END; 
 
-compareRecs := DATASET([],QueryRec) : STORED('recs'); 
 
+compareRecs := DATASET([],QueryRec) : STORED('recs'); 
+//create a new join condition for these datas STD.Date.Second()
+
+// );
 outdataset := JOIN(public.ds, compareRecs,
     STD.STR.TOUPPERCASE(TRIM(LEFT.city, LEFT, RIGHT)) = 
     STD.STR.TOUPPERCASE(TRIM(RIGHT.city, LEFT, RIGHT)) AND
@@ -22,5 +26,7 @@ outdataset := JOIN(public.ds, compareRecs,
     STD.STR.TOUPPERCASE(TRIM(RIGHT.country, LEFT, RIGHT)),
     TRANSFORM(LEFT));
 
-OUTPUT(compareRecs, NAMED('compareRecs'), ALL);
-OUTPUT(outDataset, NAMED('outDataset'), ALL);
+sortedRecords := DEDUP(SORT(outdataset, country, state, city), country, state, city);
+//sort 
+//  OUTPUT(compareRecs, NAMED('compareRecs'), ALL);
+OUTPUT(sortedRecords, NAMED('outDataset'), ALL);
