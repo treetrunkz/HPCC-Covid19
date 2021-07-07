@@ -1,10 +1,16 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import {Map as OlMap} from 'ol';
 import { QueryData } from "../../components/QueryData";
 import {  Row, Col, Form, Input, Button } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import OverlayPositioning from "ol/OverlayPositioning";
+import Overlay from "ol/Overlay";
 import OlAirportMap from '../../components/OlAirportMap';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import Travel from '../Travel';
+import { compose } from 'ol/transform';
 
 const layout = {
   labelCol: {
@@ -31,22 +37,24 @@ interface Travel {
   country: string;
   itemCount: number;
 }
+
+
   const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
   
   const [expand, setExpand] = useState(false);
   const [data, setData] = useState<any>([]);
+  const [length, setLength] = useState<any>();
+  const [lat, setLat] = useState<any>([]);
+  const [long, setLong] = useState<any>([])
 
   const onFinish = (values: any) => {
-
-    console.log(values);
     let filters = new Map();
 
     for (const [key, value] of Object.entries(values)) {
     filters.set(`recs.Row.${key}`, value);//R user input of city
+    setLength(`${key}`);
      };
     filters.set('recs.itemcount%21', "1");
-    console.log(filters);
-
     queryDestination.current.initData(filters).then(() => {
       let data2 = queryDestination.current.getData('outDataset');
       setData(data2);

@@ -1,6 +1,6 @@
 // import * as React, {useRef} from "react";
 import React, {useRef} from "react";
-import { QueryData } from "../../../components/QueryData";
+
 interface IFormProps {
   /* The http path that the form will be posted to */
   action: string;

@@ -354,6 +354,7 @@ export default function OlRangeMap(props: Props) {
                         fillColor: string,
                         showLabel: boolean) {
         return new VectorLayer({
+            
             source: new VectorSource({
                 url: geoJsonFileName,
                 format: new GeoJSON()
@@ -390,7 +391,7 @@ export default function OlRangeMap(props: Props) {
         if (map.current !== null)
             map.current.dispose();
 
-
+       
         map.current = new Map({
             overlays: [overlay],
             view: new View({
@@ -408,7 +409,7 @@ export default function OlRangeMap(props: Props) {
 
             let layer: VectorLayer = colorLayer(props.geoFile, props.colorKeyField, '#319FD3', 1, '', true);
             map.current.addLayer(layer);
-
+            console.log(props.geoFile);
             if (props.secondaryGeoFile) {
                 let secondaryLayer: VectorLayer = colorLayer(props.secondaryGeoFile,
                     'name',
