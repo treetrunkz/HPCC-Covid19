@@ -103,7 +103,7 @@ export default function OlAirportMap(props: Props) {
     
     useEffect(() => {
       console.log(props.data.length)
-      if(props.data[0] != null){
+      if(props.data != null && props.data.length > 0){
         let i = 0;
         do {
 
@@ -129,6 +129,7 @@ export default function OlAirportMap(props: Props) {
         } while (i < props.data.length);
       }
         setTableData(props.data);
+        initMap();
     },[props.data]);
 
     const initMap = () => {
@@ -136,21 +137,21 @@ export default function OlAirportMap(props: Props) {
       if ( map.current !== null){
           map.current.dispose();
       }
-      if(features != null){
+      if(features !== []){
           const overlay = new Overlay({
             offset: [10, 0],
             positioning: OverlayPositioning.TOP_LEFT,
             autoPan: false
           });
-          console.log(features);
-          
-          const vectorSource = new VectorSource({
+          console.log(features)
+          console.log(props.data)
+          var vectorSource = new VectorSource({
             features: features,
             url: "countries.geojson",
             format: new GeoJSON()
           });
         
-          const vectorLayer = new VectorLayer({
+          var vectorLayer = new VectorLayer({
             source: vectorSource,
           });
             map.current = new Map({
@@ -174,9 +175,6 @@ export default function OlAirportMap(props: Props) {
           
           }
         
-
-       
-        useEffect(initMap)
         
     return (
         <div>
