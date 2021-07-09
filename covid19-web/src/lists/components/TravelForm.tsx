@@ -47,6 +47,22 @@ interface Travel {
   const [lat, setLat] = useState<any>([]);
   const [long, setLong] = useState<any>([])
 
+  const [location, setLocation] = useState<string>('');
+    const locationStack = useRef<any>([]);
+
+
+  const pushLocation = (location: any) => {
+    console.log("pushing a location" + location);
+    locationStack.current.push(location);
+    setLocation(location);
+
+}
+  function selectHandler(name: string) {
+
+    console.log('location selection ' + name.toUpperCase());
+
+    pushLocation(name.toUpperCase());
+    }
   const onFinish = (values: any) => {
     let filters = new Map();
 
@@ -118,6 +134,7 @@ interface Travel {
         </Col>
       
       );
+      
     }
     return children;
   };
@@ -155,6 +172,7 @@ interface Travel {
           </a>
     </Form>
     <OlAirportMap 
+        // selectHandler={(name) => selectHandler(name)}
         data = {data}
     />
     </div>

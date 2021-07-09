@@ -1,28 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Map, View} from 'ol';
-import {Vector as VectorLayer} from 'ol/layer';
-import ReactDOM from 'react-dom';
-import 'ol/ol.css';
+import { Bar } from "@antv/g2plot";
+import { Card, Col, Modal, Row, Space, Statistic, Table, Tag } from "antd";
+import { Map, View } from 'ol';
+import { pointerMove } from "ol/events/condition";
+import Feature, { FeatureLike } from "ol/Feature";
 import GeoJSON from 'ol/format/GeoJSON';
-import VectorSource from "ol/source/Vector";
-import Select from "ol/interaction/Select";
-import {pointerMove} from "ol/events/condition";
-import {Fill, Stroke, Style, Text} from 'ol/style';
-import {FeatureLike} from "ol/Feature";
-import Feature from "ol/Feature";
-import Overlay from "ol/Overlay";
-import {fromLonLat} from "ol/proj";
-import {defaults as defaultInteractions} from 'ol/interaction.js'
-import OverlayPositioning from "ol/OverlayPositioning";
-import {Card, Col, Modal, Row, Statistic, Table, Tag, Space } from "antd";
-import {Bar} from "@antv/g2plot";
-import {Chart} from "./Chart";
-import 'ol/ol.css';
 import Point from 'ol/geom/Point';
+import { defaults as defaultInteractions } from 'ol/interaction.js';
+import Select from "ol/interaction/Select";
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import 'ol/ol.css';
+import Overlay from "ol/Overlay";
+import OverlayPositioning from "ol/OverlayPositioning";
+import { fromLonLat } from "ol/proj";
 import TileJSON from 'ol/source/TileJSON';
-import {Icon} from 'ol/style';
-import {Tile as TileLayer} from 'ol/layer';
+import VectorSource from "ol/source/Vector";
+import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
+import IconAnchorUnits from "ol/style/IconAnchorUnits";
 import { features } from 'process';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { Chart } from "./Chart";
 
 interface Props {
   /* filtered data from our api called via the parent component TravelForm  */
@@ -100,33 +97,45 @@ export default function OlAirportMap(props: Props) {
     const coordinates: number[][] = [];
     var features: any[] = [];
     const map = useRef<Map | null>(null);
-    
-    useEffect(() => {
-      console.log(props.data.length)
-      if(props.data != null && props.data.length > 0){
-        let i = 0;
-        do {
+  
+    let one: any = 'fraction';
+    let two: any = 'pixel';
+    var iconStyle: any | any = new Style({
+      image: new Icon({
+        anchor: [0, 0],
+        src: "/icon.png",
+        anchorXUnits: one,
+        anchorYUnits: two,
+      })
+    });
 
+    useEffect(() => {
+      if(props.data !== null && props.data.length > 0){
+        let i = 0;
+
+        do {
+          // let one: any = 'fraction';
+          // let two: any = 'pixel';
+          // var iconStyle: any | any = new Style({
+          //   image: new Icon({
+          //     anchor: [props.data[i].longitude, props.data[i].latitude],
+          //     src: "/icon.png",
+          //     anchorXUnits: one,
+          //     anchorYUnits: two,
+          //   })
+          // });
           features[i] = new Feature({
             geometry: new Point([props.data[i].longitude, props.data[i].latitude]),
-            anchor:[0, 25],
+            anchor:[0, 0],
             name: props.data[i].name,
             iata: props.data[i].iata,
             cases: props.data[i].confirmedcases,
           });
-
-          var iconStyle = new Style({
-            image: new Icon({
-              anchor: [0.5, 46],
-              src: "https://a.fsdn.com/allura/p/hpccsystems/icon?1493723487",
-            }),
-          });
-
           features[i].setStyle(iconStyle);
-
           coordinates[i] = ([props.data[i].longitude, props.data[i].latitude]);
           i += 1;
-        } while (i < props.data.length);
+        }
+        while (i < props.data.length);
       }
         setTableData(props.data);
         initMap();
@@ -137,14 +146,33 @@ export default function OlAirportMap(props: Props) {
       if ( map.current !== null){
           map.current.dispose();
       }
-      if(features !== []){
+      if(features !== [] || null || undefined){
           const overlay = new Overlay({
             offset: [10, 0],
             positioning: OverlayPositioning.TOP_LEFT,
             autoPan: false
           });
-          console.log(features)
-          console.log(props.data)
+          console.log(features);
+
+          //test//
+          var vectorSecond = new VectorSource({
+            features: features
+          })
+          var secondLayer = new VectorLayer({
+            source: vectorSecond
+          })
+
+          // var iconFeature = new Feature({
+          //   geometry: new Point([0, 0]),
+          //   name: 'Null Island',
+          //   population: 4000,
+          //   rainfall: 500,
+          // });
+
+          // iconFeature.setStyle(iconStyle);
+            
+          //test//
+
           var vectorSource = new VectorSource({
             features: features,
             url: "countries.geojson",
@@ -167,14 +195,27 @@ export default function OlAirportMap(props: Props) {
                 }),
             });
             if(container.current && popup.current && map.current !== null){
-            map.current.addLayer(vectorLayer);
+              
             
+            map.current.addLayer(vectorLayer);
+            map.current.addLayer(secondLayer);
+
+            overlay.setElement(popup.current);
             map.current.setTarget(container.current);
+            console.log(map.current.render());
+            map.current.render();
+
+            
+            //center view on element
+            // map.current.getView().setCenter(fromLonLat([x,y]))
             }
           }
           
           }
         
+
+       
+  
         
     return (
         <div>
