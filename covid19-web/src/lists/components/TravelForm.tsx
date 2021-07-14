@@ -56,9 +56,9 @@ interface Travel {
       let data2 = queryDestination.current.getData('outDataset');
       let data3: any = Object.entries(data2)[0];
       let data4 = JSON.stringify(data2);
-      console.log(data4 + "json parse")
-      console.log(data2 + "this is Object, Object inside of each object is 0, Object/ 1, Object")
-      console.log(data3 + "the 0, Object");
+      // console.log(data4 + "json parse")
+      // console.log(data2 + "this is Object, Object inside of each object is 0, Object/ 1, Object")
+      // console.log(data3 + "the 0, Object");
       
       setCard(data3);
       setData(data2);
