@@ -47,9 +47,12 @@ export default function OlRangeMap(props: Props) {
         if (!name || name.length === 0) {
             return "";
         } else {
-
+            console.log(props.data.map);
+            console.log(props.data);
+            console.log(props.data.get(periodRef.current));
             let row = props.data.get(periodRef.current).map.get(name.toUpperCase());
-            if (row) {
+            console.log(row);
+            if (row) {                                         
                 return makeTooltip(name, row);
             } else {
                 return "";
@@ -356,6 +359,7 @@ export default function OlRangeMap(props: Props) {
         return new VectorLayer({
             
             source: new VectorSource({
+                
                 url: geoJsonFileName,
                 format: new GeoJSON()
             }),
@@ -378,8 +382,9 @@ export default function OlRangeMap(props: Props) {
                             width: 1,
                         }),
                     }),
+                    
                 });
-
+                console.log(geoKeyField);
                 let text = feature.get(props.selectKeyField).toUpperCase();
                 style.getText().setText(showLabel ? text + ' ' + measureHandler(feature.get(props.colorKeyField)) : '');
                 return style;
@@ -408,8 +413,9 @@ export default function OlRangeMap(props: Props) {
         if (container.current && popup.current && map.current !== null) {
 
             let layer: VectorLayer = colorLayer(props.geoFile, props.colorKeyField, '#319FD3', 1, '', true);
+            console.log(props.colorKeyField)
             map.current.addLayer(layer);
-            console.log(props.geoFile);
+            console.log(props.geoFile + "props.geoFile");
             if (props.secondaryGeoFile) {
                 let secondaryLayer: VectorLayer = colorLayer(props.secondaryGeoFile,
                     'name',
@@ -431,10 +437,14 @@ export default function OlRangeMap(props: Props) {
             });
 
             selectMouseMove.on('select', function (e: any) {
+                console.log(e);
                 if (e.selected.length > 0) {
                     let feature = e.selected[0];
+                    console.log(feature.get('name')
+                    )
                     if (popup.current) {
                         popup.current.innerHTML = toolTipHandler(feature.get(props.colorKeyField));
+                        console.log(props.colorKeyField)
                         overlay.setPosition(e.mapBrowserEvent.coordinate);
                     }
                 } else {

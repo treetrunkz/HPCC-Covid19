@@ -21,6 +21,7 @@
     "ol": "^6.5.0",
     "react": "^16.13.0",
     "react-dom": "^16.14.0",
+    "react-openlayers": "^0.3.0",
     "react-scripts": "^3.4.4",
     "react-window": "^1.8.6",
     "typescript": "^3.9.10"

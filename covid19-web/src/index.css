@@ -11,3 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(230, 225, 225, 0.3);
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.ant-layout-sider {
+  background: white;
+}
+
+.formLayout {
+
+  margin-left: 33%;
+  position: relative;
+}
+
+#map {
+  margin-left: 19%;
+  background: white;
+}
+#table {
+  width: 33%;
+  padding-top: 3%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#inputform {
+  padding: 2%;
+  margin-left: 33%;
+  background: white;
+}
