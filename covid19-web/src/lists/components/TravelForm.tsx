@@ -39,34 +39,28 @@ interface Travel {
 }
 
   const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
-  const [geoFileInfo, setGeoFileInfo] = useState<any>({});
-  const locationStack = useRef<any>([]);
   const [expand, setExpand] = useState(false);
   const [data, setData] = useState<any>([]);
-  const [card, setCard] = useState<any>([]);
 
   const onFinish = (values: any) => {
+
     let filters = new Map();
-    let set = new Map();
     for (const [key, value] of Object.entries(values)) {
-    filters.set(`recs.Row.${key}`, value);
-     };
+      filters.set(`recs.Row.${key}`, value);
+      };
     filters.set('recs.itemcount%21', "1");
+
     queryDestination.current.initData(filters).then(() => {
-      let data2 = queryDestination.current.getData('outDataset');
-      let data3: any = Object.entries(data2)[0];
-      let data4 = JSON.stringify(data2);
-      // console.log(data4 + "json parse")
-      // console.log(data2 + "this is Object, Object inside of each object is 0, Object/ 1, Object")
-      // console.log(data3 + "the 0, Object");
-      
-      setCard(data3);
+      let data2 = queryDestination.current.getData('outDataset');  
       setData(data2);
     })
+
   }
+
   const onFail = (errorInfo: any) => {
     console.log("failed:", errorInfo);
   };
+
   const getFields = () => {
     const count = expand ? 3 : 2;
     const children = [];
@@ -151,18 +145,13 @@ interface Travel {
             {expand ? <UpOutlined /> : <DownOutlined />}
       </Form>
       </Layout>
-      
-       
                 <OlAirportMap 
-                    
-                    geofile={geoFileInfo.file}
-                    card = {card}
                     data = {data}
                 />
-    
+
     </div>
 
-)
+  )
 }
 
 export default TravelForm;
