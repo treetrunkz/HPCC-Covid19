@@ -41,7 +41,7 @@ EXPORT CalcMetrics2 := MODULE
         mCount := COUNT(mrecs);
         lastM := mRecs[1];
         firstM := mRecs[mCount];
-        SELF.startDate := firstC.date;
+        SELF.startDate := firstC.date; 
         SELF.endDate := lastC.date;
         SELF.periodDays := IF(cCount = 0, SKIP, cCount);
         SELF.cases := lastC.cumCases;

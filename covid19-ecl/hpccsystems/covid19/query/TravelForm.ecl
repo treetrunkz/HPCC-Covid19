@@ -1,6 +1,7 @@
 #WORKUNIT('name', 'hpccsystems_covid19_query_travel_form');
 
 IMPORT hpccsystems.covid19.file.public.travelFormClean as public;
+IMPORT hpccsystems.covid19.file.public.LevelMeasures as measures;
 
 IMPORT Std;
 IMPORT $;
@@ -12,9 +13,9 @@ STRING country;
 INTEGER itemCount;
 END; 
 
-
 compareRecs := DATASET([],QueryRec) : STORED('recs'); 
 //create a new join condition for these datas STD.Date.Second()
+
 
 // );
 outdataset := JOIN(public.ds, compareRecs,
@@ -27,6 +28,5 @@ outdataset := JOIN(public.ds, compareRecs,
     TRANSFORM(LEFT));
 
 sortedRecords := DEDUP(SORT(outdataset, country, state, city), country, state, city);
-//sort 
-//  OUTPUT(compareRecs, NAMED('compareRecs'), ALL);
+
 OUTPUT(sortedRecords, NAMED('outDataset'), ALL);

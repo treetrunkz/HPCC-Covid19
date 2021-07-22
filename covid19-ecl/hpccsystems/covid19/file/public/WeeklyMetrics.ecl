@@ -38,7 +38,7 @@ EXPORT countiesPath := '~hpccsystems::covid19::file::public::metrics::weekly_by_
 // END;
 
 export layout := RECORD
-    Types.metricsRec;
+    Types.metricsRec; 
     string parentLocation := '';//counties
 END;
 

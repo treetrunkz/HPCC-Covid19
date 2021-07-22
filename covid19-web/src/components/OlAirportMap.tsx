@@ -6,13 +6,14 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import 'antd/dist/antd.css';
 
-import { Table, Layout } from "antd";
+import { Table, Layout, Empty } from "antd";
 
 import "antd/dist/antd.css";
 
 
 /* Open Layer Maps v6 */
 
+import '../index.css';
 import 'ol/ol.css';
 import { Icon, Stroke, Style } from 'ol/style';
 import { Map as OlMap } from 'ol';
@@ -21,6 +22,7 @@ import Feature from "ol/Feature";
 import GeoJSON from 'ol/format/GeoJSON';
 import Point from 'ol/geom/Point';
 import { defaults as defaultInteractions } from 'ol/interaction.js';
+import {getArea, getLength} from 'ol/sphere';
 import { Vector as VectorLayer } from 'ol/layer';
 import Overlay from "ol/Overlay";
 import OverlayPositioning from "ol/OverlayPositioning";
@@ -31,6 +33,7 @@ import { pointerMove } from "ol/events/condition";
 import { columns } from '../../src/lists/components/TravelForm/Columns'
 import { Content, Header } from 'antd/lib/layout/layout';
 import LineString from 'ol/geom/LineString';
+import Geometry from 'ol/geom/Geometry';
 
 
 interface Props {
@@ -45,13 +48,19 @@ export default function OlAirportMap(props: Props) {
 
     /* primary data source for the Table object */
     const [tableData, setTableData] = useState<any>([{}]);
+    const [columnData, setColumnData] = useState<any>([]);
 
     /* global variables && map initiators */
     var coordinates: any[] = [];
     var features: any[] = [];
     let xAxis = 0;
     let yAxis = 0;
-    
+    let distance = 0;
+    let setZoom = 0;
+
+  
+
+
     const map = useRef<OlMap | null>(null);
 
     const toolTipHandler = (name: string): string => {
@@ -166,12 +175,27 @@ export default function OlAirportMap(props: Props) {
         while (i < props.data.length);
       }
       /*set data to state then initalize map */
+      console.log(props.data);
+      setColumnData(props.data);
         setTableData(props.data);
         initMap();
     },[props.data]);
-
+    const formatZoom: any = function(distance: number){
+      switch(true) {
+        case (distance < 2500000 && distance > 0):
+          return 5;
+        case (distance <= 2700000 && distance > 5000000):
+          return 4;
+        case (distance <= 5000000 && distance > 7000000):
+          return 3;
+        case (distance <= 7000000 && distance > 3000000):
+          return 2;
+        case (distance <= 10000000 && distance > 7000000):
+          return 1;
+      }
+    }
     const initMap = () => {
-      
+
       if ( map.current !== null){
           map.current.dispose();
       }
@@ -209,8 +233,17 @@ export default function OlAirportMap(props: Props) {
           }
 
           var iterations = coordinates.length
+
+          const formatLength = function(line: Geometry) {
+            const length = getLength(line);
+            distance += length;
+            
+          }
+          
           for (lines of coordinates) {
+            
             const geom = new LineString(coordinates)
+            formatLength(geom);
             geom.transform('EPSG:4326', 'EPSG:3857')
             xAxis += Number(lines[0])
             yAxis += Number(lines[1]);
@@ -219,7 +252,7 @@ export default function OlAirportMap(props: Props) {
               geometry: geom,
               color: lines.color
             })
-      
+            distance = getLength(geom)
             feature.setStyle(new Style({
               stroke: new Stroke({
                 color: '#FF0000',
@@ -230,6 +263,8 @@ export default function OlAirportMap(props: Props) {
             vectorSource.addFeature(feature)
           }
           
+          console.log(distance);
+
           xAxis = xAxis/iterations;
           yAxis = yAxis/iterations;
 
@@ -252,6 +287,7 @@ export default function OlAirportMap(props: Props) {
                 }),
             });
 
+            
             if(container.current && popup.current && map.current !== null){
              
               map.current.addLayer(vectorLayer);
@@ -288,13 +324,13 @@ export default function OlAirportMap(props: Props) {
             }
           }
         } /* End of InitMap() */
-
+        
         /* Any change to Form / Map */
           useEffect(() => {
             if (map.current !== null) {
-                if(xAxis && yAxis != 0){
+                if(xAxis && yAxis !== 0){
                   map.current.getView().setCenter(fromLonLat([xAxis, yAxis]))
-                  map.current.getView().setZoom(3);
+                  map.current.getView().setZoom(formatZoom(distance));
                   console.log("triggered");
                   xAxis = 0;
                   yAxis = 0;
@@ -304,15 +340,15 @@ export default function OlAirportMap(props: Props) {
         
     return (
       <Layout className="site-layout">
-          <Header className="site-layout-background">
+
           <div id="table">
           <Table columns={columns} dataSource={tableData}  />
           </div>
-          </Header>
-       
-          <Content>
+
+
+          <Content id="content">
           <div id="map">
-            <div id="map" className="map" style={{background: '#2b2b2b', bottom: 50, height: 640}} ref={(e) => (container.current = e)}/>
+            <div id="map" className="map" style={{background: '#2b2b2b', bottom: 50, height: 500}} ref={(e) => (container.current = e)}/>
             <div id="popup" ref={(e) => (popup.current = e)}/>
           </div>
           </Content>
