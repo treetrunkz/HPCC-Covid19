@@ -22,7 +22,7 @@ import Feature from "ol/Feature";
 import GeoJSON from 'ol/format/GeoJSON';
 import Point from 'ol/geom/Point';
 import { defaults as defaultInteractions } from 'ol/interaction.js';
-import {getArea, getLength} from 'ol/sphere';
+import { getLength} from 'ol/sphere';
 import { Vector as VectorLayer } from 'ol/layer';
 import Overlay from "ol/Overlay";
 import OverlayPositioning from "ol/OverlayPositioning";
@@ -57,9 +57,6 @@ export default function OlAirportMap(props: Props) {
     let yAxis = 0;
     let distance = 0;
     let setZoom = 0;
-
-  
-
 
     const map = useRef<OlMap | null>(null);
 
@@ -180,6 +177,7 @@ export default function OlAirportMap(props: Props) {
         setTableData(props.data);
         initMap();
     },[props.data]);
+
     const formatZoom: any = function(distance: number){
       switch(true) {
         case (distance < 2500000 && distance > 0):
@@ -194,6 +192,7 @@ export default function OlAirportMap(props: Props) {
           return 1;
       }
     }
+    
     const initMap = () => {
 
       if ( map.current !== null){
@@ -262,8 +261,7 @@ export default function OlAirportMap(props: Props) {
           );
             vectorSource.addFeature(feature)
           }
-          
-          console.log(distance);
+
 
           xAxis = xAxis/iterations;
           yAxis = yAxis/iterations;
@@ -340,7 +338,6 @@ export default function OlAirportMap(props: Props) {
         
     return (
       <Layout className="site-layout">
-
           <div id="table">
           <Table columns={columns} dataSource={tableData}  />
           </div>

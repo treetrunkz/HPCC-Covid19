@@ -1,4 +1,4 @@
-                                                                                                                                                                                                                                                                                                                                                             EXPORT CatalogUSStates := MODULE
+EXPORT CatalogUSStates := MODULE
   
   EXPORT STRING2 ToStateCode(STRING50 name) := FUNCTION
     code := CASE(name, 
@@ -131,4 +131,3 @@
 
 
 END;
-

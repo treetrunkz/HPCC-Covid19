@@ -1,15 +1,26 @@
-// IMPORT hpccsystems.covid19.file.public.OxCGRT as Ox;
-// IMPORT hpccsystems.covid19.file.public.AirlineLayout;
-
-IMPORT Std;
 
 EXPORT internationalMeasure:= MODULE
 
-EXPORT filepath2 := '~hpccsystems::covid19::file::public::oxcgrt::v2::oxcgrt.flat';
-EXPORT aldFilePath :='~hpccsystems::covid19::file::public::aldxdataxmeasure.flat';
+EXPORT aldFilePath :='~hpccsystems::covid19::file::public::airports::airportsoxford.flat';
+
 
 EXPORT layout := RECORD
 
+    STRING iata;
+    STRING name;
+    INTEGER latitude;
+    INTEGER longitude;
+    STRING countryCode;
+    STRING country;
+    STRING city;
+    STRING state;
+    REAL E1_Income_support;
+    REAL C6_Stay_at_home_requirements;
+    STRING C2_Flag;
+    REAL C1_School_closing;
+    REAL ConfirmedCases;
+    REAL H6_Facial_Coverings;
+    REAL C4_Restrictions_on_gatherings;
     REAL8 deaths,
     REAL8 new_deaths,
     REAL8 active,
@@ -18,13 +29,6 @@ EXPORT layout := RECORD
     REAL8 deaths_per_capita,    
     unsigned4 enddate;
     REAL8 new_cases,
-    STRING iata;
-    STRING name;
-    STRING city;
-    STRING state;
-    STRING country;
-    INTEGER latitude;
-    INTEGER longitude;
 
 END;
 

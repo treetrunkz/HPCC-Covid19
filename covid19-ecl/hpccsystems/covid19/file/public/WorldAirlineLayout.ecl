@@ -2,8 +2,8 @@ IMPORT STD;
 
 EXPORT WorldAirlineLayout := MODULE
 
-EXPORT filepath := '~hpccsystems::covid19::file::public::intl_airports.flat';
-
+EXPORT filepath := '~hpccsystems::covid19::file::public::airports::intl_airports.flat';
+// IATA,name,latitude,longitude,country,region,municipality
     EXPORT layout := RECORD
         STRING iata;
         STRING name;

@@ -5,7 +5,7 @@ EXPORT travelForm := MODULE
 EXPORT filepath2 := '~hpccsystems::covid19::file::public::oxcgrt::v2::oxcgrt.flat';
 EXPORT filepath := '~hpccsystems::covid19::file::public::airports.flat';
 
-    EXPORT layout := RECORD
+EXPORT layout := RECORD
         STRING iata;
         STRING name;
         STRING city;
@@ -19,9 +19,8 @@ EXPORT filepath := '~hpccsystems::covid19::file::public::airports.flat';
         STRING RegionCode;
         STRING Jurisdiction;
         STRING Date;
-        END;
+END;
 
     EXPORT travelForm := DATASET(filepath, layout, FLAT);
-
-    
+ 
 END;
