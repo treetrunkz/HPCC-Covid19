@@ -8,8 +8,8 @@ EXPORT layout := RECORD
 
     STRING iata;
     STRING name;
-    INTEGER latitude;
-    INTEGER longitude;
+    REAL latitude;
+    REAL longitude;
     STRING countryCode;
     STRING country;
     STRING city;
@@ -19,6 +19,7 @@ EXPORT layout := RECORD
     STRING C2_Flag;
     REAL C1_School_closing;
     REAL ConfirmedCases;
+    REAL vacc_complete_pct;
     REAL H6_Facial_Coverings;
     REAL C4_Restrictions_on_gatherings;
     REAL8 deaths,
@@ -26,7 +27,8 @@ EXPORT layout := RECORD
     REAL8 active,
     REAL8 recovered,
     REAL8 cases_per_capita,
-    REAL8 deaths_per_capita,    
+    REAL8 deaths_per_capita,
+    REAL8 vacc_total_people,    
     unsigned4 enddate;
     REAL8 new_cases,
 

@@ -7,8 +7,8 @@ EXPORT filePath  := '~hpccsystems::covid19::file::public::airports::AirportsOxfo
         EXPORT Layout := RECORD
             STRING iata;
             STRING name;
-            INTEGER latitude;
-            INTEGER longitude;
+            REAL latitude;
+            REAL longitude;
             STRING countryCode;
             STRING country;
             STRING state;

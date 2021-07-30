@@ -23,6 +23,8 @@ worldDs := JOIN(PublicAirports.ds,  ox.ds(date = maxDate AND jurisdiction = 'NAT
                     );
 
 level1 := Measures.level1_metrics(period = 1);
+level1;
+
 
 AirportsxALD := JOIN(level1, worldDS,
                         LEFT.location = Cat.toCountry(RIGHT.country),
@@ -32,6 +34,8 @@ AirportsxALD := JOIN(level1, worldDS,
                             SELF.enddate := LEFT.enddate;
                             SELF.new_deaths := LEFT.deaths;
                             SELF.new_cases := LEFT.cases;
+                            SELF.vacc_total_people := LEFT.vacc_total_people; 
+                            SELF.vacc_complete_pct := LEFT.vacc_complete_pct;
                             SELF.E1_Income_support := RIGHT.E1_Income_support;
                             SELF.C6_Stay_at_home_requirements := RIGHT.C6_Stay_at_home_requirements;
                             SELF.C2_flag := RIGHT.C2_flag;
