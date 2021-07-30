@@ -27,7 +27,6 @@ import VaccineMeasures from "./components/VaccineMeasures";
 const LevelDetail = () => {
     const queryLocation = useRef(new QueryData('hpccsystems_covid19_query_location_map'));
     const queryRange = useRef(new QueryData('hpccsystems_covid19_query_range_map'));
-
     const [location, setLocation] = useState<string>('');
     const locationStack = useRef<any>([]);
 
@@ -43,7 +42,7 @@ const LevelDetail = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [locationUUID, setLocationUUID] = useState<string>('');
     const [geoFileInfo, setGeoFileInfo] = useState<any>({});
-    const [heatMapType, setHeatMapType] = useState('contagion_risk');
+    const [heatMapType, setHeatMapType] = useState('contagiond_risk');
     const [period, setPeriod, periodRef] = useStateRef("");
     const [timerOn, setTimerOn, timerOnRef] = useStateRef(false);
 
@@ -197,7 +196,7 @@ const LevelDetail = () => {
 
 
             let list = queryLocation.current.getData('list');
-
+            console.log(list);
             setListData(list);//The list only shown if there is no map
             setPeriodTrendsColumnData(queryLocation.current.getData('period_trend_column'));
             setPeriodTrendsGroupedData(queryLocation.current.getData('period_trend_grouped'));

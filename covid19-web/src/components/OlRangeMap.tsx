@@ -47,7 +47,6 @@ export default function OlRangeMap(props: Props) {
         if (!name || name.length === 0) {
             return "";
         } else {
-
             let row = props.data.get(periodRef.current).map.get(name.toUpperCase());
             console.log(row);
             if (row) {

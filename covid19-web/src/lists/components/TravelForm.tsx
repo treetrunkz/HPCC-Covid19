@@ -10,6 +10,7 @@ import OlAirportMap from '../../components/OlAirportMap';
 
 import { Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
+import { Filters } from '../../utils/Filters';
 const optionArray = [];
 const { Option } = Select;
 
@@ -40,29 +41,45 @@ interface Travel {
 }
 
   const queryDestination = useRef(new QueryData('hpccsystems_covid19_query_travel_form'));
+  const queryCountries = useRef(new QueryData('hpccsystems_covid19_query_travel_countries'));
+  
   const [expand, setExpand] = useState(false);
-  const [data, setData] = useState<any>([]);
+  const [travelData, setTravelData] = useState<any>([]);
+  const [countriesData, setCountriesData] = useState<any>([]);
+    
+  useEffect(() => {
+    let filters = new Map();
+    console.log("useeffect travelform");
+    queryCountries.current.initData(filters).then(() => {
+        let data = queryCountries.current.getData('countries_metrics');  
+        console.log(data);
+        setCountriesData(data);
+    })
+  }, [])
+
 
   const onFinish = (values: any) => {
-
+    console.log(values);
     let filters = new Map();
     for (const [key, value] of Object.entries(values)) {
       filters.set(`recs.Row.${key}`, value);
       };
     filters.set('recs.itemcount%21', "1");
+
     queryDestination.current.initData(filters).then(() => {
-      let data2 = queryDestination.current.getData('outDataset');  
-      setData(data2);
+      let data = queryDestination.current.getData('travel_search');  
+      setTravelData(data);
+      console.log(data);
     })
 
   }
-
 
   const onFail = (errorInfo: any) => {
     console.log("failed:", errorInfo);
   };
 
   const getFields = () => {
+    
     const count = expand ? 3 : 2;
     const children = [];
     for (let i = 0; i < count; i++) {
@@ -378,10 +395,12 @@ interface Travel {
     initialValues={{
       remember: true,
     }}
+
     onFinish={onFinish}
     onFinishFailed={onFail}
     >
       {getFields()}
+
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Go
@@ -399,8 +418,10 @@ interface Travel {
             {expand ? <UpOutlined /> : <DownOutlined />}
       </Form>
       </Layout>
+  
                 <OlAirportMap 
-                    data = {data}
+                    travelData = {travelData}
+                    countriesData = {countriesData}                
                 />
 
     </div>
