@@ -158,7 +158,7 @@ export default function OlRangeMap(props: Props) {
         if (!name) return '#a1a080';
 
         let row = props.data.get(periodRef.current).map.get(name.toUpperCase());
-
+     
         if (row) {
             // console.log('Color location: ' + name.toUpperCase() +  ', CR = ' + row.contagion_risk + ', Period = ' + periodRef.current);
             // console.log("color change: " + heatMapTypeRef.current);
@@ -407,10 +407,12 @@ export default function OlRangeMap(props: Props) {
         });
 
         if (container.current && popup.current && map.current !== null) {
-
+            
             let layer: VectorLayer = colorLayer(props.geoFile, props.colorKeyField, '#319FD3', 1, '', true);
             map.current.addLayer(layer);
+            console.log(props.colorKeyField + "props.colorKeyField");
             console.log(props.geoFile + "props.geoFile");
+            console.log("geoJsonFileName: string, geoKeyField: string, borderColor: string, borderWidth: number, fillColor: string, showLabel: boolean");
             if (props.secondaryGeoFile) {
                 let secondaryLayer: VectorLayer = colorLayer(props.secondaryGeoFile,
                     'name',

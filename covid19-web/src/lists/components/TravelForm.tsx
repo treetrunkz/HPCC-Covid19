@@ -25,7 +25,7 @@ const layout = {
 const tailLayout = {
   wrapperCol: {
     layout: "Inline",
-    offset: 4  ,
+    offset: 4,
     span: 30,
   },
 };
@@ -50,7 +50,6 @@ interface Travel {
       filters.set(`recs.Row.${key}`, value);
       };
     filters.set('recs.itemcount%21', "1");
-
     queryDestination.current.initData(filters).then(() => {
       let data2 = queryDestination.current.getData('outDataset');  
       setData(data2);
@@ -100,7 +99,7 @@ interface Travel {
 
       <Form.Item
       
-            name={`${i}.country`}
+            name={`${i}.countryCode`}
             label={`Country`}
       rules={[
         {
@@ -109,7 +108,6 @@ interface Travel {
         }
       ]}
       >
-        
         <Select
           style={{width: '150px'}}
           placeholder="Select"

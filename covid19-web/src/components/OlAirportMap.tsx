@@ -15,7 +15,7 @@ import "antd/dist/antd.css";
 
 import '../index.css';
 import 'ol/ol.css';
-import { Icon, Stroke, Style } from 'ol/style';
+import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
 import { Map as OlMap } from 'ol';
 import { View } from 'ol';
 import Feature from "ol/Feature";
@@ -25,6 +25,7 @@ import { defaults as defaultInteractions } from 'ol/interaction.js';
 import { getLength} from 'ol/sphere';
 import { Vector as VectorLayer } from 'ol/layer';
 import Overlay from "ol/Overlay";
+import Catalog from "../utils/Catalog";
 import OverlayPositioning from "ol/OverlayPositioning";
 import { fromLonLat } from "ol/proj";
 import VectorSource from "ol/source/Vector";
@@ -34,6 +35,7 @@ import { columns } from '../../src/lists/components/TravelForm/Columns'
 import { Content, Header } from 'antd/lib/layout/layout';
 import LineString from 'ol/geom/LineString';
 import Geometry from 'ol/geom/Geometry';
+import { getCommentRange } from 'typescript';
 
 
 interface Props {
@@ -53,6 +55,7 @@ export default function OlAirportMap(props: Props) {
     /* global variables && map initiators */
     var coordinates: any[] = [];
     var features: any[] = [];
+    var countryColors: any;
     let xAxis = 0;
     let yAxis = 0;
     let distance = 0;
@@ -148,6 +151,23 @@ export default function OlAirportMap(props: Props) {
         "</table></div>"
   }
 
+
+
+  const colorAccessor = (props: any, num: number) => {
+    let d = 0;
+    
+            d = props.data.vacc_complete_pct;
+            console.log(d + "D")
+    return d >= 100 ? '#a50026' :
+        d > 65 ? '#d73027' :
+            d > 45 ? '#fdae61' :
+                d > 25 ? '#fee08b' :
+                    d > 0 ? '#66bd63' :
+                        '#1a9850';
+  }
+
+
+
     useEffect(() => {
       if(props.data !== null && props.data.length > 0){
         let i = 0;
@@ -172,7 +192,8 @@ export default function OlAirportMap(props: Props) {
         while (i < props.data.length);
       }
       /*set data to state then initalize map */
-      console.log(props.data);
+      console.log(countryColors);
+      // console.log(props.data + "info");
       setColumnData(props.data);
         setTableData(props.data);
         initMap();
@@ -188,16 +209,21 @@ export default function OlAirportMap(props: Props) {
           return 3;
         case (distance <= 7000000 && distance > 3000000):
           return 2;
-        case (distance <= 10000000 && distance > 7000000):
+        case (distance <= 2000000000 && distance > 7000000):
           return 1;
       }
     }
-    
+
+    function toContryColor(feature:any, props: any) {
+      console.log(colorAccessor(props, props.data.vacc_complete_pct));
+      return feature.get('name').toUpperCase() === props.data.countryCode ? colorAccessor(props, props.data.vacc_complete_pct) : '#000000'
+    } 
+
     const initMap = () => {
 
       if ( map.current !== null){
           map.current.dispose();
-      }
+      } 
 
       if(features !== [] || null || undefined){
           const overlay = new Overlay({
@@ -208,27 +234,26 @@ export default function OlAirportMap(props: Props) {
 
           var vectorSecond = new VectorSource({
             features: features
-          })
 
+          })
+          
+    
           var secondLayer = new VectorLayer({
-            source: vectorSecond
+            source: vectorSecond,
+         
+            
           })
-
-          /* optional features */
-          const randomColor=()=> {
-            return '#' + ('000000' + Math.floor(Math.random() * 16777215).toString(16)).slice(-6)
-          }
-
+      
           var vectorSource = new VectorSource({
             features: features,
             url: "countries.geojson",
             format: new GeoJSON()
+            
           });
           
           /*enumerate lines for -> of coordinates*/
           var lines: any = {
             segments: coordinates.slice(3),
-            color: randomColor,
           }
 
           var iterations = coordinates.length
@@ -267,9 +292,34 @@ export default function OlAirportMap(props: Props) {
           yAxis = yAxis/iterations;
 
           console.log(xAxis + "x" + yAxis + "y"); 
-          
+          const fillColor: string = '';
           var vectorLayer = new VectorLayer({
             source: vectorSource,
+            style: function (feature) {
+              console.log('Feature --- ' + feature.get('name'));
+              const style = new Style({
+                  fill: new Fill({
+                      color: toContryColor(feature, props),
+                  }),
+                  stroke: new Stroke({
+                      color: '#ffffff',
+                      width: 2,
+                  }),
+                  text: new Text({
+                      font: '9px Calibri,sans-serif',
+                      fill: new Fill({
+                          color: '#000',
+                      }),
+                      stroke: new Stroke({
+                          color: 'gray',
+                          width: 1,
+                      }),
+                  }),
+              });
+              // let text = feature.get(props.selectKeyField).toUpperCase();
+              // style.getText().setText(showLabel ?  text + ' ' + props.measureHandler(feature.get(props.colorKeyField)) : '');
+              return style;
+          },
           });
 
             map.current = new OlMap({
@@ -287,9 +337,10 @@ export default function OlAirportMap(props: Props) {
 
             
             if(container.current && popup.current && map.current !== null){
-             
+
               map.current.addLayer(vectorLayer);
               map.current.addLayer(secondLayer);
+       
               
               map.current.setTarget(container.current);
               overlay.setElement(popup.current);
@@ -299,6 +350,10 @@ export default function OlAirportMap(props: Props) {
                 condition: pointerMove,
                 });
 
+              
+                console.log(countryColors);
+
+                
           selectMouseMove.on('select', function (e: any,) {
               e.offsetX = 10;
               e.offsetY = 10;
@@ -329,7 +384,7 @@ export default function OlAirportMap(props: Props) {
                 if(xAxis && yAxis !== 0){
                   map.current.getView().setCenter(fromLonLat([xAxis, yAxis]))
                   map.current.getView().setZoom(formatZoom(distance));
-                  console.log("triggered");
+
                   xAxis = 0;
                   yAxis = 0;
                   }
@@ -350,5 +405,4 @@ export default function OlAirportMap(props: Props) {
           </div>
           </Content>
           </Layout>
-    )
-}
+    )}

@@ -113,7 +113,6 @@ export default function OlMap(props: Props) {
     }
 
 
-
     useEffect(() => {
         if (map.current !== null) {
             map.current.getLayers().forEach((layer) => {

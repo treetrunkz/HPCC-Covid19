@@ -67,7 +67,7 @@ code {
 #table {
   top: 10px;
   height: 95%;
-  box-shadow: 4px 0 5px -2px rgb(146, 135, 135);
+  box-shadow: 4px 0 5px 0px rgb(146, 135, 135);
 }
 #content {
   background: white;

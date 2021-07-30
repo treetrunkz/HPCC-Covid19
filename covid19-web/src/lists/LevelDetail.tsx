@@ -71,7 +71,7 @@ const LevelDetail = () => {
 
         if (!location) return;
 
-
+        console.log(locationUUID);
         let filters = new Map();
 
         filters.set('level', locationStack.current.length + 1);
