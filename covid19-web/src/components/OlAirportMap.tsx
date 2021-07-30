@@ -49,11 +49,11 @@ export default function OlAirportMap(props: Props) {
   const container = useRef<HTMLElement | null>(null);
   const popup = useRef<HTMLElement | null>(null);
 
-  /* primary data source for the Table object */
+  /* Primary data source for the Table object */
   const [tableData, setTableData] = useState<any>([{}]);
 
 
-  /* global variables && map initiators */
+  /* Global variables && map initiators */
   var coordinates: any[] = [];
   var features: any[] = [];
   var featureColors: any[] = [];
@@ -76,18 +76,88 @@ export default function OlAirportMap(props: Props) {
       }
     }
   }
+  console.log(props.travelData);
 
   const makeTooltip = (name: string, row: any): string => {
 
-    /* ternary group to translate object properties to a human readable format */
+    /* Ternary group to translate object properties to a human readable format */
     var statename = row.name;
     var iata = row.iata;
     var cases = row.confirmedcases
-    var stayhome = row.c6_stay_at_home_requirements > 0 ? "Stay at Home" : "Free to Roam"
-    //create cases to return pertinent information 3 = totally closed, etc.
-    var school = row.c1_school_closing > 0 ? "Schools Closed" : "Schools Open"
-    var masks = row.facial_coverings > 0 ? "Masks Required" : "No Mask Required"
-    var gatherings = row.c4_restrictions_on_gatherings > 0 ? "Gatherings Prohibited" : "Groups allowed (Check size)"
+
+    var stayhome;
+    switch(row.c6_stay_at_home_requirements) {
+        case 0:
+          stayhome = "No Stay At Home Requirements"
+          break;
+        case 1:
+          stayhome = "Recommended Stay At Home"
+          break;
+        case 2:
+          stayhome = "Some Non-Essential Trips, Curfew In Place"
+          break;
+        case 3:
+          stayhome = "Posted Days Only, Including Essential Travel"
+          break;
+        case 4:
+          stayhome = "No Travel"
+          break;
+    }
+    
+    var school;
+    switch(row.c1_school_closing) {
+      case 0:
+        school = "Schools are Open"
+        break;
+      case 1:
+        school = "Altered School Model (Hybrid/Online Learning)"
+        break;
+      case 2:
+        school = "Schools Closed, Childcare Remains Open"
+        break;
+      case 3:
+        school = "All Schools in Jurisdiction Closed"
+        break;
+    };
+    
+    var masks;
+    switch(row.h6_facial_coverings){
+      case 0: 
+        masks = "Masks Not Required";
+        break;
+      case 1: 
+        masks = "Masks required in most places";
+        break;
+      case 2: 
+        masks = "Compulsory To Wear Masks in Shops & Other Locations";
+        break;
+      case 3: 
+        masks = "Mask Must Wear: Crowded Streets / Public Places";
+        break;
+      case 4: 
+        masks = "Masks Mandatory All Times Outside of Home";
+        break;
+    };
+    
+    console.log(row.h6_facial_coverings + "facial covers" + masks + "returned # <--");
+    var gatherings;
+    switch(row.c4_restrictions_on_gatherings){
+      case 0:
+       gatherings = "No Restrictions"
+       break;
+      case 1:
+        gatherings = "Restriction on Gatherings"
+        break;
+      case 2:
+        gatherings = "Gatherings of 2 or Less"
+        break;
+      case 3:
+        gatherings = "Gatherings of 3 or Less"
+        break;
+      case 4:
+        gatherings = "Gatherings of 4 or Less"
+        break;
+    }
 
     return "<div style='padding: 5px; border: 2px solid black; background: darkslategray'><table style='color: whitesmoke;'>" +
       "<tr>" +
@@ -192,9 +262,7 @@ export default function OlAirportMap(props: Props) {
       while (i < props.travelData.length);
     }
 
-    /*set data to state then initalize map */
-    // console.log(props.data + "info");
-
+    /*Set data to state then initalize Map with initMap(); */
     setTableData(props.travelData);
     initMap();
   }, [props.travelData]);
@@ -349,7 +417,7 @@ export default function OlAirportMap(props: Props) {
 
 
       if (container.current && popup.current && map.current !== null) {
-
+        console.log(props.countriesData);
 
         map.current.addLayer(vectorLayer);
         map.current.addLayer(secondLayer);
