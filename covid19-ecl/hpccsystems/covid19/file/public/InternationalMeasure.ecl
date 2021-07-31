@@ -24,6 +24,7 @@ EXPORT layout := RECORD
     REAL C4_Restrictions_on_gatherings;
     REAL8 deaths,
     REAL8 new_deaths,
+    REAL8 contagionrisk,
     REAL8 active,
     REAL8 recovered,
     REAL8 cases_per_capita,
