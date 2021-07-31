@@ -7,14 +7,14 @@ import { QueryData } from "../components/QueryData";
 
 import 'antd/dist/antd.css';
 
-import { Table, Layout, Empty } from "antd";
+import { Table, Layout, Empty, Row, Col  } from "antd";
 
 import "antd/dist/antd.css";
 
 
 /* Open Layer Maps v6 */
 import '../index.css';
-import 'ol/ol.css';
+// import 'ol/ol.css';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
 import { Map as OlMap } from 'ol';
 import { View } from 'ol';
@@ -32,11 +32,12 @@ import VectorSource from "ol/source/Vector";
 import Select from "ol/interaction/Select";
 import { pointerMove } from "ol/events/condition";
 import { columns } from '../../src/lists/components/TravelForm/Columns'
-import { Content, Header } from 'antd/lib/layout/layout';
+import { Header } from 'antd/lib/layout/layout';
 import LineString from 'ol/geom/LineString';
 import Geometry from 'ol/geom/Geometry';
 import { getCommentRange } from 'typescript';
 
+const { Sider, Content } = Layout;
 
 interface Props {
   travelData: any;
@@ -51,7 +52,8 @@ export default function OlAirportMap(props: Props) {
 
   /* Primary data source for the Table object */
   const [tableData, setTableData] = useState<any>([{}]);
-
+  const [countriesData, setCountriesData] = useState<any>([{}]);
+  
 
   /* Global variables && map initiators */
   var coordinates: any[] = [];
@@ -76,7 +78,7 @@ export default function OlAirportMap(props: Props) {
       }
     }
   }
-  console.log(props.travelData);
+
 
   const makeTooltip = (name: string, row: any): string => {
 
@@ -84,7 +86,9 @@ export default function OlAirportMap(props: Props) {
     var statename = row.name;
     var iata = row.iata;
     var cases = row.confirmedcases
+    var contagion = row.contagionrisk
 
+    console.log(row);
     var stayhome;
     switch(row.c6_stay_at_home_requirements) {
         case 0:
@@ -138,18 +142,18 @@ export default function OlAirportMap(props: Props) {
         masks = "Masks Mandatory All Times Outside of Home";
         break;
     };
-    
+
     console.log(row.h6_facial_coverings + "facial covers" + masks + "returned # <--");
     var gatherings;
     switch(row.c4_restrictions_on_gatherings){
       case 0:
-       gatherings = "No Restrictions"
+       gatherings = "<b>No</b> Restrictions"
        break;
       case 1:
         gatherings = "Restriction on Gatherings"
         break;
       case 2:
-        gatherings = "Gatherings of 2 or Less"
+        gatherings = "Gatherings of <b>2</b> or Less"
         break;
       case 3:
         gatherings = "Gatherings of 3 or Less"
@@ -195,6 +199,14 @@ export default function OlAirportMap(props: Props) {
       "</td>" +
       "<td><b>" +
       school +
+      "</b></td>" +
+      "</tr>" +
+      "<tr>" +
+      "<td style='padding-right: 10px'>" +
+      "Contagion Risk: " +
+      "</td>" +
+      "<td><b>" +
+      contagion +
       "</b></td>" +
       "</tr>" +
       "<tr>" +
@@ -473,17 +485,23 @@ export default function OlAirportMap(props: Props) {
 
   return (
     <Layout className="site-layout">
-      <div id="table">
-        <Table columns={columns} dataSource={tableData} />
-      </div>
 
 
-      <Content id="content">
-        <div id="map">
-          <div id="map" className="map" style={{ background: '#2b2b2b', bottom: 50, height: 500 }} ref={(e) => (container.current = e)} />
+        <Sider>
+        <Col pull={24}>
+      
+        <Table columns={columns} dataSource={tableData} pagination={false}/>
+       
+        </Col>
+        </Sider>
+  
+          <Content>
+          <div id="map" className="map" style={{ background: '#2b2b2b', height: 400}} ref={(e) => (container.current = e)} />
           <div id="popup" ref={(e) => (popup.current = e)} />
-        </div>
-      </Content>
+          </Content>
+
+
+
     </Layout>
   )
 }

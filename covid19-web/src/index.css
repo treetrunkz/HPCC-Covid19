@@ -6,48 +6,96 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+div.ant-layout-sider-children {
+  position: fixed;
 
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.ol-table {
+  position: fixed !important;
 
-.logo {
-  height: 32px;
-  margin: 16px;
-  background: rgba(230, 225, 225, 0.3);
+}
+.ol-map {
+  float: top;
+  z-index: -1 !important;
+  position: absolute !important;
+}
+ .ant-popover-title {
+  position: absolute;
 }
 
+.ant-popover-inner-content {
+  padding: 0px !important
+}
+/*
 .site-layout .site-layout-background {
-  background: #fff;
+
+}
+.ant-table {
+  float: left;
+  position: absolute;
 }
 
+.ol-airport {
+  width: 100%;
+}
+.ol-form {
+   position: absolute; 
+  float: right;
+}
+
+div.ant-row {
+position: absolute !important
+}
+colgroup {
+  float: left;
+}
+/*
+.ant-table-placeholder {
+
+}
 .ant-layout-sider {
-  background: white;
-}
 
-.formLayout {
+}
+div#map {
+
+}
+th.ant-table-cell {
+
+}
+main#content.ant-layout-content {
+
+}
+.ant-layout-content {
+
+} */
+/* .formLayout {
 
   margin-left: 33%;
   position: relative;
-}
+} */
 
-#map {
-  margin-left: 13%;
-  background: white;
+/* #map {
+  margin-left: 14%;
+
 }
 #table {
+  z-index: 2;
   width: 25%;
   padding-top: 2%;
   position: absolute;
   top: 0;
-  left: 0;
-}
-#inputform {
-  padding: 2%;
-  margin-left: 33%;
-  background: white;
-}
+  left: 3;
+} */
+/* #inputform {
+
+  padding: 1%;
+  margin-left: 25%;
+  background: rgba(255, 255,255) !important
+} */
 #soft-text {
   color:gray;
   margin-bottom: 3px !important
@@ -64,15 +112,15 @@ code {
   box-shadow: 2px 0 0px -19px rgb(136, 122, 122);
   height: 100%
 }
-#table {
+/* #table {
   top: 10px;
   height: 95%;
   box-shadow: 4px 0 5px 0px rgb(146, 135, 135);
-}
+} */
 #content {
-  background: white;
+  background: rgb(255, 255, 255);
 }
-.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+/* .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
   position: relative;
    padding: 2px !important; 
    padding-left: 5px !important;
@@ -86,4 +134,19 @@ code {
   border-left-style: hidden !important;
   border-right-style: hidden !important;
 
+} */
+#form-bg {
+  border: solid gray;
+}
+
+/* .fix-table {
+  position: absolute;
+ 
+
+} */
+
+#travel-window{
+  padding: 2%;
+  width: 800px !important;
+  height: 500px;
 }

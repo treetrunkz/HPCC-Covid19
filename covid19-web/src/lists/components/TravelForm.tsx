@@ -4,7 +4,7 @@ import { QueryData } from "../../components/QueryData";
 import {  Row, Col, Form, Input, Button, Select } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
-import "../../index.css"
+// import "../../index.css"
 
 import OlAirportMap from '../../components/OlAirportMap';
 
@@ -85,7 +85,7 @@ interface Travel {
     for (let i = 0; i < count; i++) {
       children.push(
         <Col key={i}>
-          <label>Destination</label>
+
         <Row key={i}>
       <Form.Item
             name={`${i}.state`}
@@ -387,8 +387,8 @@ interface Travel {
 
 
   return (
-    <div>
-         <Layout id="inputform">
+      <>
+    <Col>
     <Form 
     {...layout}
     name="basic"
@@ -417,14 +417,17 @@ interface Travel {
           >Collapse</a>
             {expand ? <UpOutlined /> : <DownOutlined />}
       </Form>
-      </Layout>
-  
-                <OlAirportMap 
+            </Col>
+              
+                <OlAirportMap
                     travelData = {travelData}
                     countriesData = {countriesData}                
                 />
 
-    </div>
+      </>
+      
+      
+
 
   )
 }
