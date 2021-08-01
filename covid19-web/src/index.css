@@ -6,96 +6,48 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-div.ant-layout-sider-children {
-  position: fixed;
 
-}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.ol-table {
-  position: fixed !important;
 
-}
-.ol-map {
-  float: top;
-  z-index: -1 !important;
-  position: absolute !important;
-}
- .ant-popover-title {
-  position: absolute;
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(230, 225, 225, 0.3);
 }
 
-.ant-popover-inner-content {
-  padding: 0px !important
-}
-/*
 .site-layout .site-layout-background {
-
-}
-.ant-table {
-  float: left;
-  position: absolute;
+  background: #fff;
 }
 
-.ol-airport {
-  width: 100%;
-}
-.ol-form {
-   position: absolute; 
-  float: right;
-}
-
-div.ant-row {
-position: absolute !important
-}
-colgroup {
-  float: left;
-}
-/*
-.ant-table-placeholder {
-
-}
 .ant-layout-sider {
-
+  background: white;
 }
-div#map {
 
-}
-th.ant-table-cell {
-
-}
-main#content.ant-layout-content {
-
-}
-.ant-layout-content {
-
-} */
-/* .formLayout {
+.formLayout {
 
   margin-left: 33%;
   position: relative;
-} */
+}
 
-/* #map {
-  margin-left: 14%;
-
+#map {
+  margin-left: 13%;
+  background: white;
 }
 #table {
-  z-index: 2;
   width: 25%;
   padding-top: 2%;
   position: absolute;
   top: 0;
-  left: 3;
-} */
-/* #inputform {
-
-  padding: 1%;
-  margin-left: 25%;
-  background: rgba(255, 255,255) !important
-} */
+  left: 0;
+}
+#inputform {
+  padding-top: 2%;
+  margin-left: 33%;
+  background: white;
+}
 #soft-text {
   color:gray;
   margin-bottom: 3px !important
@@ -104,7 +56,7 @@ main#content.ant-layout-content {
 .ant-table {
   font-size: 9px;
 }
-#cardImage {
+#card-image {
   float: right;
 }
 #cardStyle {
@@ -112,21 +64,23 @@ main#content.ant-layout-content {
   box-shadow: 2px 0 0px -19px rgb(136, 122, 122);
   height: 100%
 }
-/* #table {
+#table {
   top: 10px;
   height: 95%;
   box-shadow: 4px 0 5px 0px rgb(146, 135, 135);
-} */
-#content {
-  background: rgb(255, 255, 255);
 }
-/* .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+#content {
+  background: white;
+}
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
   position: relative;
    padding: 2px !important; 
    padding-left: 5px !important;
    width: 50% !important;
   overflow-wrap: break-word; }
-
+main.ant-layout-content {
+  background: white;
+}
 .ant-card-body {
    padding: 0px !important;
    padding-left: 5% !important;
@@ -134,19 +88,4 @@ main#content.ant-layout-content {
   border-left-style: hidden !important;
   border-right-style: hidden !important;
 
-} */
-#form-bg {
-  border: solid gray;
-}
-
-/* .fix-table {
-  position: absolute;
- 
-
-} */
-
-#travel-window{
-  padding: 2%;
-  width: 800px !important;
-  height: 500px;
 }

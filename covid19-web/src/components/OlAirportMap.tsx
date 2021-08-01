@@ -485,23 +485,18 @@ export default function OlAirportMap(props: Props) {
 
   return (
     <Layout className="site-layout">
-
-
-        <Sider>
-        <Col pull={24}>
-      
-        <Table columns={columns} dataSource={tableData} pagination={false}/>
-       
-        </Col>
-        </Sider>
-  
-          <Content>
-          <div id="map" className="map" style={{ background: '#2b2b2b', height: 400}} ref={(e) => (container.current = e)} />
-          <div id="popup" ref={(e) => (popup.current = e)} />
-          </Content>
-
-
-
+    <Header className="site-layout-background">
+    <div id="table">
+    <Table columns={columns} dataSource={tableData}  />
+    </div>
+    </Header>
+ 
+    <Content>
+    <div id="map">
+      <div id="map" className="map" style={{background: '#2b2b2b', bottom: 50, height: 640}} ref={(e) => (container.current = e)}/>
+      <div id="popup" ref={(e) => (popup.current = e)}/>
+    </div>
+    </Content>
     </Layout>
   )
 }

@@ -4,13 +4,15 @@ import { QueryData } from "../../components/QueryData";
 import {  Row, Col, Form, Input, Button, Select } from "antd";
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
-// import "../../index.css"
+import "../../index.css"
 
 import OlAirportMap from '../../components/OlAirportMap';
 
 import { Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
+
 import { Filters } from '../../utils/Filters';
+
 const optionArray = [];
 const { Option } = Select;
 
@@ -49,17 +51,14 @@ interface Travel {
     
   useEffect(() => {
     let filters = new Map();
-    console.log("useeffect travelform");
     queryCountries.current.initData(filters).then(() => {
         let data = queryCountries.current.getData('countries_metrics');  
-        console.log(data);
         setCountriesData(data);
     })
   }, [])
 
 
   const onFinish = (values: any) => {
-    console.log(values);
     let filters = new Map();
     for (const [key, value] of Object.entries(values)) {
       filters.set(`recs.Row.${key}`, value);
@@ -69,7 +68,6 @@ interface Travel {
     queryDestination.current.initData(filters).then(() => {
       let data = queryDestination.current.getData('travel_search');  
       setTravelData(data);
-      console.log(data);
     })
 
   }
@@ -387,20 +385,18 @@ interface Travel {
 
 
   return (
-      <>
-    <Col>
+    <div>
+         <Layout id="inputform">
     <Form 
     {...layout}
     name="basic"
     initialValues={{
       remember: true,
     }}
-
     onFinish={onFinish}
     onFinishFailed={onFail}
     >
       {getFields()}
-
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Go
@@ -417,14 +413,13 @@ interface Travel {
           >Collapse</a>
             {expand ? <UpOutlined /> : <DownOutlined />}
       </Form>
-            </Col>
-              
-                <OlAirportMap
+      </Layout>
+                <OlAirportMap 
                     travelData = {travelData}
                     countriesData = {countriesData}                
                 />
 
-      </>
+       </div>
       
       
 

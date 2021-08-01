@@ -7,8 +7,8 @@ import  TravelForm  from "./components/TravelForm";
 
 export default function Travel() {
     return (
-            <div id="travel-window">
+        <div style={{width: 1400, height: 1000, overflow: 'auto', paddingLeft: 10, paddingRight: 10}}>
             <TravelForm></TravelForm>
-            </div>
+        </div>
     )
 }
