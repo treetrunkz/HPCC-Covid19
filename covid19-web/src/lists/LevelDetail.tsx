@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Layout, Popover, Radio, Select as DropdownSelect, Skeleton, Space, Spin, Tabs} from "antd";
+import {Button, Layout, Modal, Popover, Radio, Select as DropdownSelect, Skeleton, Space, Spin, Tabs} from "antd";
 import {QueryData} from "../components/QueryData";
 import {
     CaretLeftFilled,
@@ -12,7 +12,6 @@ import {
     StepForwardFilled
 } from '@ant-design/icons';
 import MetricsTerms from "./MetricsTerms";
-import Travel from "./Travel";
 import Catalog from "../utils/Catalog";
 import useStateRef from "../utils/UseStateRef";
 import OlRangeMap from "../components/OlRangeMap";
@@ -22,6 +21,7 @@ import HotList from "./components/HotList";
 import LevelList from "./components/LevelList";
 import TextArea from "antd/es/input/TextArea";
 import VaccineMeasures from "./components/VaccineMeasures";
+import TravelForm from "./components/TravelForm";
 
 
 const LevelDetail = () => {
@@ -45,6 +45,9 @@ const LevelDetail = () => {
     const [heatMapType, setHeatMapType] = useState('contagiond_risk');
     const [period, setPeriod, periodRef] = useStateRef("");
     const [timerOn, setTimerOn, timerOnRef] = useStateRef(false);
+    
+    const [travelMapVisible, setTravelMapVisible] = useState<boolean>(false);
+
 
     const scrollLayout = useRef<any | null>(null);
 
@@ -629,10 +632,13 @@ const LevelDetail = () => {
 
     return (
         <Layout>
+            {/* The Modal for the Travel Map */}
+
+            <TravelForm visible={travelMapVisible} onClose={() => setTravelMapVisible(false)}/>
+
             <div style={{textAlign: "center"}}>
-                <Popover key={'popover_travel'} title={"Travel"} content={<Travel/>}
-                         trigger={"click"}><Button href={"#Travel"} type={"link"} className={"anchor-btn"}>Travel
-                         </Button></Popover>
+                <Button href={"#Travel"} type={"link"} className={"anchor-btn"} onClick={() => setTravelMapVisible(true)}>Travel
+                         </Button>
                 <Button href={"#commentary"} type={"link"} className={"anchor-btn"}>Commentary/Top</Button>
                 <Button href={"#map"} type={"link"} className={"anchor-btn"}>Map</Button>
                 <Button href={"#summary_stats"} type={"link"} className={"anchor-btn"}>Stats</Button>

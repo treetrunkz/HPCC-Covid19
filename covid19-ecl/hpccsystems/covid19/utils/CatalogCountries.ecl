@@ -1,6 +1,8 @@
  EXPORT CatalogCountries := MODULE
 
   EXPORT countries := DATASET([
+        {'KOSOVO', 'XK'},
+        {'UNITED KINGDOM' ,'GB'           },
         {'AFGHANISTAN' ,'AF'              },
         {'ALAND ISLANDS' ,'AX'            },
         {'ALBANIA' ,'AL'                  },
@@ -218,7 +220,7 @@
         {'TAJIKISTAN' ,'TJ'               },
         {'TANZANIA' ,'TZ'                 },
         {'THAILAND' ,'TH'                 },
-        {'TIMOR-LESTE' ,'TL'              },
+        {'TIMOR LESTE' ,'TL'              },
         {'TOGO' ,'TG'                     },
         {'TOKELAU' ,'TK'                  },
         {'TONGA' ,'TO'                    },
@@ -231,7 +233,7 @@
         {'UGANDA' ,'UGA'                   },
         {'UKRAINE' ,'UKR'                  },
         {'UNITED ARAB EMIRATES' ,'AR'     },
-        {'UNITED KINGDOM' ,'UK'           },
+
         {'US' ,'US'                       },
         {'UNITED STATES OUTLYING ISL.' ,'UM'},
         {'URUGUAY' ,'UY'                  },

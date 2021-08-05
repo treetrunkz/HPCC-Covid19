@@ -11,12 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+/* 
 .logo {
   height: 32px;
   margin: 16px;
   background: rgba(230, 225, 225, 0.3);
-}
+} */
 
 .site-layout .site-layout-background {
   background: #fff;
@@ -29,6 +29,7 @@ code {
 .formLayout {
 
   margin-left: 33%;
+  padding-bottom: 5%;
   position: relative;
 }
 
@@ -43,21 +44,28 @@ code {
   top: 0;
   left: 0;
 }
+.ant-model {
+  background-color: black;
+}
 #inputform {
   padding-top: 2%;
   margin-left: 33%;
   background: white;
 }
+#div.ant-modal-header {
+  background: "black" !important
+}
 #soft-text {
-  color:gray;
+  color:rgb(83, 83, 83);
   margin-bottom: 3px !important
 }
 /* table */
 .ant-table {
-  font-size: 9px;
+  font-size: 12px;
 }
+
 #card-image {
-  float: right;
+  float: right !important;
 }
 #cardStyle {
   padding: 2%;
