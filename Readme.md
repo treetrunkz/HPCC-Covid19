@@ -223,6 +223,12 @@ Country Map View
 State Map View
 </p>
 
+*_Travel View_ shows a travel specific interface to view COVID-19 data and metrics tied to a user's input Itinerary. The map is interactive, colored coded by vaccine percentages - other data are displayed in the location based map view. IATA Codes, Airport Information, Airport Locations, Confirmed Cases, School Closing Data, Contagion Risk Percentages, Deaths, Gathering Restrictions, and Mask Restrictions. The data and view are dynamically populated in the map, allowing the user to have a centered and properly zoomed view after input.
+
+![Travel Map View](/docs/images/readme/travel_world.png)
+<p align="center">
+ Travel Map View
+</p>
 
 * _Stats View_ shows the summary statistics and metrics of each location. The location can be world level, country level, province/state level or city/country level. The statistics include but limited to daily new cases, daily new deaths, cumulative cases and cumulative deaths. It also includes all the metrics introduced in the previous section. The metrics are displayed in a bar chart. 
 
