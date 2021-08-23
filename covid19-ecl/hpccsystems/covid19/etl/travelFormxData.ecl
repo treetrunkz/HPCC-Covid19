@@ -7,10 +7,9 @@ IMPORT hpccsystems.covid19.file.public.OxCGRT as ox;
 
 IMPORT Std;
 
-maxDate := MAX(Ox.ds, date);
-
-
-
+maxDate := 20210710;
+maxDate;
+ox.ds(date = maxDate);
 worldDs := JOIN(PublicAirports.ds,  ox.ds(date = maxDate AND jurisdiction = 'NAT_TOTAL'),
                     LEFT.countryCode = RIGHT.countryCode,
                     TRANSFORM
@@ -24,15 +23,15 @@ worldDs := JOIN(PublicAirports.ds,  ox.ds(date = maxDate AND jurisdiction = 'NAT
                     ), 
                     LEFT OUTER
                 );
-
+ox.ds(date = maxDate AND jurisdiction = 'NAT_TOTAL');
+ox.ds;
 level1 := Measures.level1_metrics(period = 1);
-//level1;
-
+level1;
 OUTPUT(worldDs,,NAMED('airports_joined_oxid'));
 OUTPUT(worldDs(countrycode = 'GB'),NAMED('airports_joined_oxid_by_GB'));
 
 AirportsxALD := JOIN(worldDS, level1,
-                        RIGHT.location = Cat.toCountry(LEFT.country),
+                        RIGHT.location = Cat.toCountry(LEFT.countrycode),
                         TRANSFORM
                         (
                             internationalMeasure.layout,

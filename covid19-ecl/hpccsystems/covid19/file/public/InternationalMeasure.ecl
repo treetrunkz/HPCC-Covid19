@@ -1,11 +1,7 @@
 
 EXPORT internationalMeasure:= MODULE
-
 EXPORT aldFilePath :='~hpccsystems::covid19::file::public::airports::airportsoxford.flat';
-
-
 EXPORT layout := RECORD
-
     STRING iata;
     STRING name;
     REAL latitude;
@@ -32,9 +28,6 @@ EXPORT layout := RECORD
     REAL8 vacc_total_people,    
     unsigned4 enddate;
     REAL8 new_cases,
-
 END;
-
   EXPORT ds := DATASET(aldFilePath, layout, FLAT);
-
 END;

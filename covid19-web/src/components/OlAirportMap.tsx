@@ -177,7 +177,7 @@ const makeTooltip = (name: string, row: any): string => {
     "</tr>" +
     "<tr>" +
     "<td>" +
-    "Gathing Restrictions: " +
+    "Gathering Restrictions: " +
     "</td>" +
     "<td><b>" +
     gatherings +
@@ -192,23 +192,9 @@ const makeTooltip = (name: string, row: any): string => {
     "</table></div>"
 }
 
-const colorAccessor = (num: number) => {
-  let d = 0;
-  
-  d = num
-  console.log(d);
-  return d === 0 ? '#2F2F2F' :
-  d <= 20 ? '#a50026' :
-      d <= 40 ? '#d73027' :
-          d <= 60 ? '#fdae61' :
-              d <= 80 ? '#fee08b' :
-                  d < 100 ? '#66bd63' :
-                      '#2F2F2F';
-}
-
 function getColor(value: number){
   var hue=((1-value)*120).toString(10);
-  return ["hsl(",hue,",100%,50%)"].join("");
+  return ["hsl(",hue,",80%,20%)"].join("");
 }
 
 const toolTipHandler = (name: string): string => {
@@ -246,13 +232,13 @@ export const columns = [
         <div> {record.city} {record.state} <div style={{float: 'right', color: 'lightgray'}}><b>{record.iata}</b> {Math.round(record.latitude)}&#176; {Math.round(record.longitude)}&#176;</div> <br></br> 
         <hr></hr> 
         <h3>{record.name}</h3>
-        <img id="cardImage" src={`/64/${record.countrycode}.png`}/><div style={{backgroundColor: 'lightgray', textShadow: '1px 1px 3px white'}}><p id="soft-text">{record.c1_school_closing > 0 ? <div style={{color: 'red'}}> Schools Closed </div> : <div style={{color: 'green'}}> Schools Open </div>}</p></div>
+        <img id="cardImage" src={`/64/${record.countrycode}.png`}/><div style={{backgroundColor: 'lightgray'}}><p id="soft-text">{record.c1_school_closing > 0 ? <div style={{color: 'red'}}> Schools Closed </div> : <div style={{color: 'green'}}> Schools Open </div>}</p></div>
         <p id="soft-text">{record.facial_coverings > 0 ? <div style={{backgroundColor: 'white',color: 'red'}}> Masks Required </div> : <div style={{color: 'green'}}> No Mask Required </div> }</p>
-        <p id="soft-text"><div style={{backgroundColor: 'lightgray',color: getColor(record.contagionrisk), textShadow: '1px 1px 3px black'}}>Contagion Risk: {record.contagionrisk}</div></p>
+        <p id="soft-text"><div style={{backgroundColor: 'lightgray',color: getColor(record.contagionrisk)}}>Contagion Risk: {record.contagionrisk}</div></p>
         <p id="soft-text"><div style={{backgroundColor: 'white'}}>Total % Vaccinated: {record.vacc_complete_pct}</div></p>
-        <p id="soft-text"><div style={{backgroundColor: 'lightgray', textShadow: '1px 1px 2px white'}}>Total Vaccinated People: {record.vacc_total_people}</div></p>
+        <p id="soft-text"><div style={{backgroundColor: 'lightgray'}}>Total Vaccinated People: {record.vacc_total_people}</div></p>
         <p id="soft-text"><div style={{backgroundColor: 'white'}}>New Cases: {record.new_cases}</div></p>
-        <p id="soft-text"><div style={{backgroundColor: 'lightgray', textShadow: '1px 1px 2px white'}}>Deaths: {record.deaths}</div></p>
+        <p id="soft-text"><div style={{backgroundColor: 'lightgray'}}>Deaths: {record.deaths}</div></p>
         <p id="soft-text"><div style={{backgroundColor: 'white'}}>New Deaths: {record.new_deaths}</div></p>
         </div>
         </div>
@@ -327,7 +313,19 @@ export default function OlAirportMap(props: Props) {
         return 1;
     }
   }
-
+  const colorAccessor = (num: number) => {
+    let d = 0;
+    
+    d = num
+    console.log(d);
+    return d === 0 ? '#2F2F2F' :
+    d <= 20 ? '#a50026' :
+        d <= 40 ? '#d73027' :
+            d <= 60 ? '#fdae61' :
+                d <= 80 ? '#fee08b' :
+                    d < 100 ? '#66bd63' :
+                        '#2F2F2F';
+  }
   function CountryColor(feature: any, props: any) {
     if (props.countriesData !== null && props.countriesData.length > 0) {
       let i = 0;
@@ -468,7 +466,6 @@ export default function OlAirportMap(props: Props) {
           layers: [secondLayer],
           condition: pointerMove,
         });
-        
         selectMouseMove.on('select', function (e: any,) {
           e.offsetX = 10;
           e.offsetY = 10;
@@ -476,8 +473,6 @@ export default function OlAirportMap(props: Props) {
             let feature = e.selected[0];
             console.log(popup.current);
             if (popup.current) {
-              // setToolTipToggle(toolTipHandler(feature.get('setId')));
-              // setToolTipToggle(overlay.setPosition(e.mapBrowserEvent.coordinate));
               popup.current.innerHTML = toolTipHandler(feature.get('setId'));
               overlay.setPosition(e.mapBrowserEvent.coordinate);
             }

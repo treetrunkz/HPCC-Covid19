@@ -81,7 +81,8 @@ const TravelForm = (props: Props) => {
     const children = [];
     var requiredInput = true;
     function required(count: number){
-      if(count>1) {requiredInput = false};
+      if(count>1) {requiredInput = false
+        };
       return requiredInput;
     }
     for (let i = 0; i < count; i++) {

@@ -75,7 +75,7 @@ export  class QueryData {
             this.returnData = this.getJSONData(jsonObj);
             Object.entries(jsonObj).forEach(([key, value]) => {
                 if (key===resultName) {
-                    stack.push(value.Row);
+                    stack.push(value.Row);  
                 } else {
                     this.traverse(value, resultName, stack);
                 }

@@ -1,9 +1,6 @@
 EXPORT internationalAirports := MODULE;
-
 EXPORT filepath := '~hpccsystems::covid19::file::raw::airports::intl_airports.csv';
-
 EXPORT layout := RECORD
-
     STRING id; 
     STRING ident;
     STRING airport_type; 
@@ -22,10 +19,6 @@ EXPORT layout := RECORD
     STRING home_link; 
     STRING wikipedia_link; 
     STRING keywords;  
-
 END;
-
-
 EXPORT ds := DATASET(filepath, layout, CSV(HEADING(1)));
-
 END;
